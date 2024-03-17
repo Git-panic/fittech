@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link href="./static/css/styles3.css" rel="stylesheet" />
+{% endblock %}
+
+
+
+{% block content %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('./static/img/yoga.jpg'); background-size: cover;">
+</header>
+
+
+<!-- Main Content-->
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-5">
+                    <h2>Register</h2>
+                </div>
+                <!-- 로그인 또는 회원가입 템플릿에 추가 -->
+                {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+                        <form method="POST" action="/register" class="needs-validation" novalidate=""
+                            autocomplete="off">
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="user_name">Name</label>
+                                <input id="user_name" type="text" class="form-control" name="user_name" value=""
+                                    required autofocus>
+                                <div class="invalid-feedback">
+                                    Name is required
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="user_id">Email</label>
+                                <input id="user_id" type="email" class="form-control" name="user_id" value="" required>
+                                <div class="invalid-feedback">
+                                    Email is invalid
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="user_password">Password</label>
+                                <input id="password" type="user_password" class="form-control" name="user_password"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Password is required
+                                </div>
+                            </div>
+
+                            <p class="form-text text-muted mb-3">
+                                By registering you agree with our terms and condition.
+                            </p>
+
+                            <div class="align-items-center d-flex">
+                                <button type="submit" class="btn btn-primary ms-auto" style = "background-color: #2E8B57;">
+                                    Register
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer py-3 border-0">
+                        <div class="text-center">
+                            Already have an account? <a href="login" class="text-dark">Login</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5 text-muted">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block footer %}
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+
+                <div class="small text-center text-muted fst-italic">Copyright &copy; Fitech 2023</div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{% endblock %}

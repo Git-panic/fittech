@@ -1,0 +1,429 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/b2a71afe25.js" crossorigin="anonymous"></script>
+
+
+<link href="{{ url_for('static', filename='css/styles3.css') }}" rel="stylesheet" />
+<link href="{{ url_for('static', filename='css/exercise.css') }}" rel="stylesheet" />
+<!-- Additional CSS and JavaScript links can be included here -->
+<style>
+    /* CSS 스타일을 사용하여 video 요소를 나란히 배치 */
+    .video-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+
+    .video {
+        width: 50%;
+        /* 각각의 비디오 요소가 화면 너비의 48%를 차지하도록 설정 */
+        max-width: 100%;
+        /* 최대 너비 설정 */
+    }
+
+    /* 로딩 페이지 스타일 */
+    #loadingPage {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        /* 흰 배경 */
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        z-index: 1000;
+        /* 로딩 페이지를 다른 콘텐츠 위에 표시 */
+    }
+
+    /* 실제 콘텐츠는 초기에 숨겨진 상태 */
+    #content {
+        display: none;
+    }
+
+    audio::-webkit-media-controls-panel {
+        display: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('./static/img/yoga.jpg'); background-size: cover;">
+</header>
+<div id="loadingPage">
+    <img src="{{ url_for('static', filename='gif/loading5.gif') }}">
+</div>
+<!-- Main Content-->
+<div id="content">
+    <div class="dashboard">
+        <div class="profile">
+            <img src="./static/img/timer.jpg" alt="이미지 설명" id="timerImage">
+            <h1 id="timerHeader">Timer</h1>
+            <div id="timeDisplay"></div>
+            <div id="startText" class="decoyoga-text">운동을 시작해주세요</div>
+
+            <!-- <h1>Time Difference Calculator</h1>
+            <p>Page accessed on: <span id="accessTime"></span></p>
+            <button onclick="calculateTimeDifference()">Calculate Time Difference</button>
+            <p>Time spent since page access: <span id="timeDifference"></span> seconds.</p> -->
+        </div>
+
+        <button class="end-session-button" onclick="sendTimeDifference()">END</button>
+
+        <div class="bento">
+            <div class="box calories">
+                <!-- 웹캠 비디오 요소 추가 -->
+                <img src="{{ url_for('video_feed') }}" class="image" onload="hideLoadingPage()">
+            </div>
+            <div class="box exercise-score">
+                <div class="decoyoga-container">
+                    <img src="./static/img/decoyoga.jpg" alt="요가 아이콘 이미지" class="decoyoga">
+                    <div id="labelDisplay" class="decoyoga-text"></div>
+                </div>
+                <div class="downdog-container">
+                    <img src="{{ url_for('static', filename='gif/Downdog.gif') }}" alt="움짤">
+                </div>
+                <div class="box exercise-table">
+                    <div class="feedback-section">
+                        <div class="feedback-title">
+                            <i class="fa-solid fa-comments fa-beat fa-2xl" style="color: #cee3d2;"></i>
+                            <span class="feedback-text">피드백</span>
+                        </div>
+
+                        <div>
+                            <div class="horizontal-box-container">
+                                <div id="box1" class="horizontal-box">
+                                    <div id="feedBackDisplay1"></div>
+                                    <div id="feedBackDisplay2"></div>
+                                    <div id="feedBackDisplay3"></div>
+                                    <div id="feedBackDisplay4"></div>
+                                </div>
+
+                                <div id="box2" class="horizontal-box">
+                                    <div id="feedBackDisplay5"></div>
+                                    <div id="feedBackDisplay6"></div>
+                                    <div id="feedBackDisplay7"></div>
+                                    <div id="feedBackDisplay8"></div>
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+                <audio controls autoplay id="audioPlayer" class="hidden-audio" style="display: none;">
+                    <!-- 노래 파일 경로를 소스(src)에 지정 -->
+                    <source src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+            <script>
+
+                let accessTime;
+                console.log(accessTime);
+
+                window.onload = function () {
+                    // 페이지가 로드될 때 현재 시간을 기록
+                    accessTime = new Date();
+                    // AJAX 요청 수정
+                    $.ajax({
+                        url: '/get_audio_state',  // 서버에서 state 값을 가져올 엔드포인트
+                        type: 'POST',
+                        success: function (response) {
+                            console.log(response);
+
+                            // 서버로부터 가져온 state 값을 사용하여 오디오 파일 이름을 생성
+                            var audioFileName = response + '.mp3';
+
+                            // 오디오 플레이어의 소스(src)를 동적으로 설정
+                            var audioPlayer = $('#audioPlayer')[0];
+                            audioPlayer.src = "/static/mp3/" + audioFileName;
+                            audioPlayer.volume = 0.3; // 50% 볼륨
+
+                            // 오디오를 재생
+                            audioPlayer.muted = true;
+                            audioPlayer.play();
+                            audioPlayer.muted = false;
+                        },
+                        error: function (error) {
+                            console.error(error);
+                        }
+                    });
+                };
+
+
+                function sendTimeDifference() {
+                    let currentTime = new Date();
+                    let timeDifference0 = Math.floor((currentTime - accessTime) / 1000);
+                    let timeDifference = Math.floor(timeDifference0 / 60); // 분 단위로 변환
+
+                    // AJAX 요청을 사용하여 시간 차이를 서버로 전송
+                    fetch('/send_time_difference', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ timeDifference: timeDifference })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            window.location.href = '/after'; // 'after' 페이지로 이동
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                }
+
+                function hideLoadingPage() {
+                    // 로딩 페이지 숨기기
+                    document.getElementById("loadingPage").style.display = "none";
+                    // 실제 콘텐츠 표시
+                    document.getElementById("content").style.display = "block";
+                }
+
+                var previousFeedback = ''; // 이전 피드백 값을 저장하는 변수
+
+                // Connect to the WebSocket server
+                var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+                // 초기에 이미지와 "Timer" 텍스트 숨기기
+                document.getElementById('timerImage').style.display = 'none';
+                document.getElementById('timerHeader').style.display = 'none';
+
+                // Listen for the 'return_time' event
+                socket.on('time', function (data) {
+                    var time = data.time;
+
+                    // 정규 표현식을 사용하여 입력이 숫자인지 확인
+                    var isNumeric = /^[0-9]+$/.test(time);
+
+                    if (isNumeric) {
+                        document.getElementById('startText').style.display = 'none';
+                        // 숫자가 전송된 경우 이미지와 "Timer" 텍스트 표시
+                        document.getElementById('timerImage').style.display = 'block';
+                        document.getElementById('timerHeader').style.display = 'block';
+                        document.getElementById('timeDisplay').innerHTML = time;
+                    } else {
+                        // 문자가 전송된 경우 이미지와 "Timer" 텍스트 숨김
+                        document.getElementById('timerImage').style.display = 'none';
+                        document.getElementById('timerHeader').style.display = 'none';
+                        document.getElementById('timeDisplay').innerHTML = time;
+                    }
+                });
+
+                document.getElementById('labelDisplay').innerHTML = 'Downdog';
+
+                // Listen for the 'label' event
+                socket.on('label', function (data) {
+                var label = data.label;
+                document.getElementById('labelDisplay').innerHTML = label;
+                var imageUrl = "{{ url_for('static', filename='gif/') }}" + label + ".gif";
+                console.log(label);
+                // Find the image element and update its src attribute
+                var imageElement = document.querySelector('.downdog-container img');
+                if (imageElement) {
+                imageElement.src = imageUrl;
+                }
+
+                // 음성으로 label 값을 출력
+                var msg = new SpeechSynthesisUtterance(label);
+                window.speechSynthesis.speak(msg);
+                });
+
+                var beforefeedback1 = ''; // 이전 피드백 내용을 저장할 변수
+                var beforefeedback2 = '';
+                var beforefeedback3 = '';
+                var beforefeedback4 = '';
+                var beforefeedback5 = '';
+                var beforefeedback6 = '';
+                var beforefeedback7 = '';
+                var beforefeedback8 = '';
+
+                var feedbackCount1 = 0;
+                var feedbackCount2 = 0;
+                var feedbackCount3 = 0;
+                var feedbackCount4 = 0;
+                var feedbackCount5 = 0;
+                var feedbackCount6 = 0;
+                var feedbackCount7 = 0;
+                var feedbackCount8 = 0;
+
+                var setcount = 50;
+
+                // Listen for the 'return_time' event
+                socket.on('feedback1', function (data) {
+                    feedbackCount1++;
+                    var feedback1 = data.feedback1;
+                    document.getElementById('feedBackDisplay1').innerHTML = '' + feedback1;
+                    console.log(feedbackCount1);
+                    if (beforefeedback1 !== feedback1) {
+                        feedbackCount1 = 0;
+                        beforefeedback1 = feedback1;
+                    }
+                    if (feedbackCount1 > setcount) {
+                        feedbackCount1 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount1, feedback1);
+                });
+
+                // Listen for the 'feedback2' event
+                socket.on('feedback2', function (data) {
+                    feedbackCount2++;
+                    var feedback2 = data.feedback2;
+                    document.getElementById('feedBackDisplay2').innerHTML = '' + feedback2;
+                    if (beforefeedback2 !== feedback2) {
+                        feedbackCount2 = 0;
+                        beforefeedback2 = feedback2;
+                    }
+                    if (feedbackCount2 > setcount) {
+                        feedbackCount2 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount2, feedback2);
+                });
+
+                // Listen for the 'feedback3' event
+                socket.on('feedback3', function (data) {
+                    feedbackCount3++;
+                    var feedback3 = data.feedback3;
+                    document.getElementById('feedBackDisplay3').innerHTML = '' + feedback3;
+                    if (beforefeedback3 !== feedback3) {
+                        feedbackCount3 = 0;
+                        beforefeedback3 = feedback3;
+                    }
+                    if (feedbackCount3 > setcount) {
+                        feedbackCount3 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount3, feedback3);
+                });
+
+                // Listen for the 'feedback4' event
+                socket.on('feedback4', function (data) {
+                    if (feedback4 !== ""){
+                        feedbackCount4++;
+                    }
+                    var feedback4 = data.feedback4;
+                    document.getElementById('feedBackDisplay4').innerHTML = '' + feedback4;
+                    if (beforefeedback4 !== feedback4) {
+                        feedbackCount4 = 0;
+                        beforefeedback4 = feedback4;
+                    }
+                    if (feedbackCount4 > setcount) {
+                        feedbackCount4 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount4, feedback4);
+                });
+
+                // Listen for the 'feedback5' event
+                socket.on('feedback5', function (data) {
+                    if (feedback5 !== ""){
+                        feedbackCount5++;
+                    }
+                    var feedback5 = data.feedback5;
+                    document.getElementById('feedBackDisplay5').innerHTML = '' + feedback5;
+                    if (beforefeedback5 !== feedback5) {
+                        feedbackCount5 = 0;
+                        beforefeedback5 = feedback5;
+                    }
+                    if (feedbackCount5 > setcount) {
+                        feedbackCount5 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount5, feedback5);
+                });
+
+                // Listen for the 'feedback6' event
+                socket.on('feedback6', function (data) {
+                    if (feedback6 !== ""){
+                        feedbackCount6++;
+                    }
+                    var feedback6 = data.feedback6;
+                    document.getElementById('feedBackDisplay6').innerHTML = '' + feedback6;
+                    if (beforefeedback6 !== feedback6) {
+                        feedbackCount6 = 0;
+                        beforefeedback6 = feedback6;
+                    }
+                    if (feedbackCount6 > setcount) {
+                        feedbackCount6 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount6, feedback6);
+                });
+
+                // Listen for the 'feedback7' event
+                socket.on('feedback7', function (data) {
+                    if (feedback7 !== ""){
+                        feedbackCount7++;
+                    }
+                    var feedback7 = data.feedback7;
+                    document.getElementById('feedBackDisplay7').innerHTML = '' + feedback7;
+                    if (beforefeedback7 !== feedback7) {
+                        feedbackCount7 = 0;
+                        beforefeedback7 = feedback7;
+                    }
+                    if (feedbackCount7 > setcount) {
+                        feedbackCount7 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount7, feedback7);
+                });
+
+                // Listen for the 'feedback8' event
+                socket.on('feedback8', function (data) {
+                    if (feedback8 !== ""){
+                        feedbackCount8++;
+                    }
+                    var feedback8 = data.feedback8;
+                    document.getElementById('feedBackDisplay8').innerHTML = '' + feedback8;
+                    if (beforefeedback8 !== feedback8) {
+                        feedbackCount8 = 0;
+                        beforefeedback8 = feedback8;
+                    }
+                    if (feedbackCount8 > setcount) {
+                        feedbackCount8 = 0;
+                    }
+                    checkAndResetFeedbackCount(feedbackCount8, feedback8);
+                });
+
+                function checkAndResetFeedbackCount(count, eventName) {
+                    if (count == setcount) {
+                        // 음성 출력 로직
+
+
+                        // Web Speech API를 사용하여 음성으로 출력
+                        var speechSynthesis = window.speechSynthesis;
+                        var speechUtterance = new SpeechSynthesisUtterance(eventName);
+                        // 음성 속도 조절 (0.1부터 10까지의 범위)
+                        speechUtterance.rate = 0.8; // 기본 값은 1, 0.5는 느리게, 2는 빠르게 읽음
+
+                        // 음성 음조(톤) 조절 (0부터 2까지의 범위)
+                        speechUtterance.pitch = 0.8; // 기본 값은 1, 0.5는 낮은 톤, 2는 높은 톤
+
+                        // 음성 음량 조절 (0부터 1까지의 범위)
+                        speechUtterance.volume = 0.7; // 기본 값은 1, 0은 무음, 1은 최대 음량
+                        speechSynthesis.speak(speechUtterance);
+
+                        // 수신 횟수 초기화
+                        // resetFeedbackCount(eventName);
+                    }
+                }
+
+
+            </script>
+
+            {% endblock %}

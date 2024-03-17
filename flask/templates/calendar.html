@@ -1,0 +1,552 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!--캘린더4, test,test-->
+<link href="./static/css/styles3.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    @font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'komika_axisregular';
+        src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/212141/komikax_-webfont.woff2') format('woff2'), url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/212141/komikax_-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    html,
+    body {
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+
+    /* 스타일을 추가하여 달력을 꾸미세요 */
+    .calendar-container {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    /*배경 회색*/
+    body {
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    #calendar,
+    #event-display {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+
+    }
+
+    /* 달력 스타일 */
+    #calendar {
+        margin-left: 250px;
+        width: 60%;
+        max-width: 400px;
+        margin-right: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        /*background-color: #f5f5f5;*/
+        box-sizing: border-box;
+        /*box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);*/
+        margin-bottom: 10px;
+        height: 440px;
+    }
+
+    .header {
+        margin-top: 7px;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: bold;
+        /* Center align the text */
+        /* Make the text bold */
+        font-size: 31px;
+        /* Optionally, increase the font size */
+        /* Other styling properties like padding, background-color, etc., can be added here */
+    }
+
+    .calendar-table {
+        width: 100%;
+        border-collapse: separate;
+        /* Change to 'separate' to allow border-radius */
+        border-spacing: 0;
+        /* Remove space between cells */
+        /*border-radius: 10px;  Rounded corners for the table */
+        table-layout: fixed;
+        /* Keep the existing layout */
+    }
+
+
+
+    .calendar-table th {
+        /*여기 요일*/
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 1px;
+        /* Reduce the right padding */
+        padding-left: 5px;
+        /* Reduce the left padding */
+        /*border: 1px solid #ccc;*/
+        border: none;
+    }
+
+    .calendar-table td {
+        text-align: center;
+        padding: 10px;
+        /*border: 1px solid #ccc;*/
+        border: none;
+        overflow: hidden;
+        /* 셀 내용이 넘칠 경우 숨김 처리 */
+        white-space: nowrap;
+        /* 내용을 한 줄로 처리 */
+        cursor: pointer;
+    }
+
+
+    .other-month {
+        color: #aaa;
+    }
+
+    .selected {
+        background-color: #2E8B57;
+
+        color: white;
+        border-radius: 50%;
+    }
+
+    /* 이벤트 영역 스타일 */
+    #event-display {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        box-sizing: border-box;
+        margin-right: 250px;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+        height: 440px;
+    }
+
+    #selected-date {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* 이벤트 영역 스타일 */
+    #event-display {
+        width: 35%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+    #event-display h2 {
+        /* Add left margin to the "기록" section */
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    #selected-date {
+        /* Add left margin to the date display */
+        margin-left: 10px;
+    }
+
+
+    .event-details {
+        margin-top: 22px;
+    }
+
+    .custom-p01 {
+        /*여기 날짜*/
+        transform: translateY(-2px);
+        margin-left: 20px;
+        /*text-align: center;*/
+    }
+
+    .event-item {
+        /*여기 감정*/
+        margin-top: 19px;
+        margin-bottom: 10px;
+        /*padding: 5px;*/
+        padding-top: 1px;
+        padding-left: 5px;
+        border: none;
+        margin-left: 100px;
+        /*border: 1px solid #ccc;*/
+        /*background-color: #f5f5f5;*/
+        /*text-align: center;*/
+    }
+
+    .event-item p {
+        margin-left: 100px;
+    }
+
+    .event-item br {
+        content: "";
+        display: block;
+        margin-top: 18px;
+        /* Space above the line break */
+        margin-bottom: 10px;
+        /* Space below the line break */
+    }
+
+    /* 이전/다음 버튼 스타일 */
+    #prev,
+    #next {
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #2E8B57;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        margin-bottom: 30px;
+
+    }
+
+    #prev {
+        margin-left: 250px;
+    }
+
+    /* 이전/다음 버튼 호버 스타일 */
+    #prev:hover,
+    #next:hover {
+        background-color: #207244;
+    }
+
+    .no-events {
+        /*여기 노이벤트*/
+        color: #888;
+        /* Light grey color */
+        /*text-align: center; /* Center the text */
+        margin-top: 20px;
+        /* Add space at the top */
+        font-style: italic;
+        /* Italicize the text */
+        margin-left: 10px;
+    }
+
+    .thursday {
+        margin-right: 500px;
+    }
+
+    /* Reduce the left padding for "Fri" */
+    .friday {
+        transform: translateX(-3px);
+    }
+    .saturday {
+        transform: translateX(-4px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('./static/img/yoga.jpg'); background-size: cover;">
+</header>
+<!-- Main Content-->
+<div class="calendar-container">
+    <div id="calendar"></div>
+    <div id="event-display">
+        <h2 style="font-family: 'SUITE-Regular', Arial, sans-serif;">Record</h2>
+        <div id="event-details" class="custom-p01"></div>
+    </div>
+</div>
+<div class="calendar-buttons">
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+</div>
+<script>
+    // 초기 설정
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth();
+    let eventDetails = {};
+
+    // 달력 생성 함수
+    function createCalendar(year, month) {
+        const calendar = document.getElementById('calendar');
+        calendar.innerHTML = ''; // 달력 초기화
+
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        // 달력의 헤더를 생성 (월과 연도)
+        const header = document.createElement('div');
+        header.classList.add('header');
+        header.textContent = `${monthNames[month]} ${year}`;
+        calendar.appendChild(header);
+
+        // 날짜 표시 테이블 생성
+        const table = document.createElement('table');
+        table.classList.add('calendar-table');
+
+        // 요일 표시
+        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const weekdayRow = document.createElement('tr');
+        weekdays.forEach(weekday => {
+            const dayCell = document.createElement('th');
+            dayCell.textContent = weekday;
+
+            // Add a class for styling the gap
+            if (weekday === 'Thu') {
+                dayCell.classList.add('thursday');
+            } else if (weekday === 'Fri') {
+                dayCell.classList.add('friday');
+            }
+            else if (weekday === 'Mon') {
+                dayCell.classList.add('monday');
+            } else if (weekday === 'Tue') {
+                dayCell.classList.add('tuesday');
+            } else if (weekday === 'Wed') {
+                dayCell.classList.add('wednesday');
+            } else if (weekday === 'Sat') {
+                dayCell.classList.add('saturday');
+            } else if (weekday === 'Sun') {
+                dayCell.classList.add('sunday');
+            }
+            weekdayRow.appendChild(dayCell);
+        });
+        table.appendChild(weekdayRow);
+
+        // 해당 월의 첫 날과 마지막 날을 기준으로 날짜 생성
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+        let currentDate = new Date(year, month, 1);
+        const startDayOfWeek = firstDayOfMonth.getDay(); // 월의 첫 날의 요일 인덱스
+
+        // 첫 주에 대한 새로운 행을 먼저 추가
+        let newRow = document.createElement('tr');
+        table.appendChild(newRow);
+
+        // 첫 주의 시작이 일요일이 아닐 경우, 빈 셀로 채웁니다.
+        for (let i = 0; i < startDayOfWeek; i++) {
+            let emptyCell = document.createElement('td');
+            newRow.appendChild(emptyCell);
+        }
+
+        // 현재 월의 날짜를 추가하면서 달력을 채웁니다.
+        while (currentDate <= lastDayOfMonth) {
+            if (currentDate.getDay() === 0) {
+                // 새로운 주를 시작할 때마다 새로운 행 추가
+                newRow = document.createElement('tr');
+                table.appendChild(newRow);
+            }
+
+            // 날짜 셀을 추가합니다.
+            let dateCell = document.createElement('td');
+            dateCell.textContent = currentDate.getDate();
+            dateCell.dataset.date = currentDate.toISOString().split('T')[0]; // data-date 속성 추가
+            // ... 날짜 셀에 이벤트 리스너와 기타 속성 추가 ...
+            newRow.appendChild(dateCell);
+
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        calendar.appendChild(table);
+    }
+
+    document.getElementById('calendar').addEventListener('click', function (event) {
+        // 이벤트가 발생한 요소에서 가장 가까운 'td' 요소를 찾습니다.
+        const targetCell = event.target.closest('td');
+
+        // 'td' 요소가 있고, 해당 요소에 data-date 속성이 있는 경우에만 처리합니다.
+        if (targetCell && targetCell.dataset.date) {
+            const clickedDate = targetCell.dataset.date;
+
+            // 클릭된 날짜를 Date 객체로 변환합니다.
+            const clickedDateObj = new Date(clickedDate);
+
+            // 클릭된 날짜에 1일을 추가합니다.
+            clickedDateObj.setDate(clickedDateObj.getDate() + 1);
+
+            // 이전에 선택된 날짜의 'selected' 클래스 제거
+            const previouslySelected = calendar.querySelector('.selected');
+            if (previouslySelected) {
+                previouslySelected.classList.remove('selected');
+            }
+
+            // 클릭된 셀에 'selected' 클래스 추가
+            targetCell.classList.add('selected');
+
+            // 클릭된 날짜에 1일을 추가한 날짜를 문자열로 변환
+            const updatedDate = clickedDateObj.toISOString().split('T')[0];
+
+            console.log(updatedDate);
+
+            // 이벤트 정보를 가져오는 AJAX 요청을 보냅니다.
+            fetch(`/get_event?selected_date=${updatedDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    // 이벤트 세부 정보를 표시합니다.
+                    displayEventDetails2(updatedDate, data);
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                });
+        }
+    });
+
+
+    // 이전 월 버튼 클릭 시
+    document.getElementById('prev').addEventListener('click', function () {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        createCalendar(currentYear, currentMonth);
+    });
+
+    // 다음 월 버튼 클릭 시
+    document.getElementById('next').addEventListener('click', function () {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        createCalendar(currentYear, currentMonth);
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+
+        function getYesterdayFormatted() {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1); // Subtract one day
+            return yesterday.toISOString().split('T')[0];
+        }
+
+        function highlightTodayAndFetchEvents() {
+            const today = new Date();
+            const todayFormatted = today.toISOString().split('T')[0];
+            const todayFormatted2 = getYesterdayFormatted();
+
+            // Highlight today's date in the calendar
+            const todayCell = document.querySelector(`td[data-date='${todayFormatted2}']`);
+            if (todayCell) {
+                todayCell.classList.add('selected');
+            }
+
+            // Fetch and display event details for today
+            fetchAndDisplayEventDetails2(todayFormatted);
+        }
+
+        // Function to fetch and display event details for a given date
+        function fetchAndDisplayEventDetails2(date) {
+            fetch(`/get_event?selected_date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayEventDetails2(date, data);
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                });
+        }
+
+        // Initialize calendar and set default date to today
+        createCalendar(currentYear, currentMonth);
+        highlightTodayAndFetchEvents();
+    });
+
+
+
+
+    function displayEventDetails2(date, events) {
+        const eventDetailsContainer = document.getElementById('event-details');
+        eventDetailsContainer.textContent = ''; // 이전 내용 초기화
+        // Emotion to emoji mapping
+        const emotionMap = {
+            'excited': '😆',
+            'happy': '😊',
+            'soso': '😐',
+            'angry': '😠',
+            'sad': '😢'
+        };
+        /// 선택한 날짜를 이벤트 창에 표시합니다.
+        const selectedDateElement = document.createElement('p');
+        selectedDateElement.id = 'selected-date';
+
+        // 현재 날짜 문자열을 Date 객체로 변환
+        const selectedDate = new Date(date);
+
+        // 날짜를 1일 더하고 다시 문자열로 변환
+        selectedDate.setDate(selectedDate.getDate());
+        const formattedDate = selectedDate.toISOString().split('T')[0];
+
+        //selectedDateElement.textContent = 'Selected Date: ' + formattedDate;
+        selectedDateElement.textContent = '날짜 : ' + formattedDate;
+        eventDetailsContainer.appendChild(selectedDateElement);
+
+        if (events && events.length > 0) {
+            events.forEach(event => {
+                const eventElement = document.createElement('div');
+                eventElement.classList.add('event-item');
+                let eventText = ''; // 이벤트 텍스트 초기화
+
+                // Check if the memo contains an emotion keyword
+                let memoParts = event.memo.split(' ');
+                let emotionText = memoParts.shift(); // Remove the first part of the memo
+                let emotionEmoji = emotionMap[emotionText.toLowerCase()]; // Find corresponding emoji
+                // If an emoji is found, prepend it to the memo
+                let displayText = emotionEmoji ? emotionEmoji + ' ' : '';
+                displayText += memoParts.join(' '); // Add the rest of the memo
+
+                if (event.time || event.time === 0) {
+                    // time이 존재하면 시간 정보를 추가
+                    eventText += `${event.time}분<br>`;
+
+                }
+
+                if (event.memo) {
+                    // memo가 존재하면 메모 정보를 추가
+                    if (eventText) {
+                        // 이미 시간 정보가 있는 경우, 시간과 메모를 줄 바꿈으로 구분
+                        eventText += '\n';
+                    }
+                    eventText += displayText;
+                }
+
+                // 이벤트 텍스트를 설정
+                eventElement.innerHTML = eventText;
+                eventElement.style.marginLeft = '5px';
+                eventDetailsContainer.appendChild(eventElement);
+            });
+        } else {
+            const noEventsMessage = document.createElement('p');
+            noEventsMessage.textContent = 'No events for this date.';
+            noEventsMessage.classList.add('no-events');
+            eventDetailsContainer.appendChild(noEventsMessage);
+        }
+    }
+
+    // 초기 달력 생성
+    createCalendar(currentYear, currentMonth);
+
+
+
+</script>
+
+
+{% endblock %}
+
+
+{% block footer %}
+<!-- Footer-->
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="small text-center text-muted fst-italic">Copyright © Fitech 2023</div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+{% endblock %}

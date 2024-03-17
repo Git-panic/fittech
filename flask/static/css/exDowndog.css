@@ -1,0 +1,76 @@
+.center-text {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: -10px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    font-family: 'Black Han Sans', sans-serif;
+
+}
+
+.horizontal-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 50px;
+    padding: 50px;
+    margin-top: 20px;
+}
+
+.box {
+    width: 100%;
+    padding: 10px;
+    min-width: 150px; /* 최소 가로 크기 설정 */
+    min-height: 80px; /* 최소 세로 크기 설정 */
+    text-align: center;
+    border-radius: 0.75rem;
+    color: #000000;
+    font-family: 'Do Hyeon', cursive;
+    box-shadow: 0px 1px 1px rgb(45 44 44 / 90%);
+}
+
+.box img {
+  width: 100%;
+  /* 부모 요소에 대해 자동 너비로 설정 */
+  height: 100%;
+  /* 부모 요소에 대해 100% 높이로 설정 */
+  object-fit: cover;
+  /* 비율 유지하면서 채우기 */
+  border-radius: 0.75rem;
+  object-position: 50%;
+}
+
+.button-container {
+    font-family: 'Do Hyeon', cursive;
+    text-align: right; /* 버튼을 오른쪽으로 정렬 */
+    position: absolute; /* 절대 위치 지정 */
+    top: 150px; /* 상단에서부터의 위치 */
+    right: 50px; /* 오른쪽에서부터의 위치 */
+    margin-top: 20px;
+
+}
+
+.text-style-1 {
+    font-size: 25px;
+    color: #000000;
+    text-align: left;
+    margin-left:40px;
+    margin-right:40px;
+}
+
+.text-style-1 i {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.5rem; /* 아이콘 크기 */
+    margin-right: 10px; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+
+.text-style-2 {
+    font-size: 25px;
+    color: #000000;
+    text-align: left;
+    margin-left:70px;
+    margin-right:40px;
+    transform: translateY(-30px);
+}

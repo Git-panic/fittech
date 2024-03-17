@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link href="./static/css/styles3.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('./static/img/yoga.jpg'); background-size: cover;">
+</header>
+<style>
+    @font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    body {
+        background-color: #f5f5f5;
+    }
+
+    .left-box {
+        margin-right: 60px;
+        margin-bottom: 60px;
+        padding: 50px;
+        width: 30%;
+        height: 635px;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+        float: left;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        background-color: #fff;
+
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .left-box h2,
+    h3 {
+        text-align: center;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+
+    .right-box {
+        padding: 50px;
+        width: 33.85%;
+        text-align: center;
+        float: left;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        background-color: #fff;
+
+    }
+
+    .right-box h2 {
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+
+
+    .chart1 {
+        width: 67.1%;
+        /* 필요에 따라 조정 */
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 5%;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 50px;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+        text-align: center;
+        /* float: left; 제거 */
+    }
+
+    .chart1 h2 {
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+
+    .user-info {
+        text-align: center;
+        margin: 20px;
+    }
+
+    #modify-button {
+        background-color: #27ae60;
+        /* Change to your desired color */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20%;
+
+    }
+
+    .container2 {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        gap: 20px;
+        /* 박스 간 간격 */
+        padding: 20px;
+        /* 여유 공간 */
+    }
+
+    .user-content {
+        padding-top:30px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+</style>
+<div class="container2">
+    <div class="left-box">
+
+        
+
+            <div class="user-info">
+                <h2>Info</h2>
+                <div class="user-content">
+                <p>닉네임</p>
+                <h3>{{ user_name }}</h3>
+                <p>총 운동 시간</p>
+
+                <h3>
+                    <div id="totalYearlyMinutes"></div>
+                </h3>
+            </div>
+                <button id="modify-button">회원정보 수정</button>
+            
+
+        </div>
+
+    </div>
+    <div class="right-box">
+        <h2>올해의 감정</h2>
+        <!-- User Information -->
+        <canvas id="emotionFrequencyChart" width="400" height="400"></canvas>
+    </div>
+</div>
+<div class="chart1">
+    <h2>달별 분석</h2>
+
+    <canvas id="monthDataChart"></canvas>
+</div>
+
+
+
+
+
+<script>
+    fetch('/get_yearly_data')
+        .then(response => response.json())
+        .then(data => {
+            // 시간 데이터 차트
+            const timeCtx = document.getElementById('monthDataChart').getContext('2d');
+            new Chart(timeCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data.monthly_totals),
+                    datasets: [{
+                        label: 'Total Minutes',
+                        data: Object.values(data.monthly_totals),
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            document.getElementById('totalYearlyMinutes').innerText =
+                //`총 운동 시간: ${data.total_yearly_minutes} 분`;
+                ` ${data.total_yearly_minutes} 분`;
+
+            // 연간 감정 빈도수 차트
+            const emotionCtx = document.getElementById('emotionFrequencyChart').getContext('2d');
+            new Chart(emotionCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data.yearly_emotions),
+                    datasets: [{
+                        label: 'Emotion Frequency',
+                        data: Object.values(data.yearly_emotions),
+                        backgroundColor: [
+                            'rgba(255, 165, 0, 0.6)',//신남
+                            'rgba(50, 205, 50, 0.6)', // 행복 (노란색)
+                            'rgba(112, 128, 144, 0.6)', // 보통 (빨간색)
+                            'rgba(255, 99, 132, 0.6)', // 화남 (빨간색)
+                            'rgba(54, 162, 235, 0.6)' // 슬픔 (파란색)
+                        ],
+                        borderColor: [
+                            'rgba(255, 165, 0, 1)',//신남
+                            'rgba(50, 205, 50, 1)', // 행복 (노란색)
+                            'rgba(112, 128, 144, 1)', // 보통 (빨간색)
+                            'rgba(255, 99, 132, 1)', // 화남 (빨간색)
+                            'rgba(54, 162, 235, 1)' // 슬픔 (파란색)
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+</script>
+
+
+
+{% endblock %}
+{% block footer %}
+<!-- Footer-->
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="small text-center text-muted fst-italic">Copyright © Fitech 2023</div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+{% endblock %}

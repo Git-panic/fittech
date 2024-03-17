@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&display=swap" rel="stylesheet">
+
+<script src="https://kit.fontawesome.com/b2a71afe25.js" crossorigin="anonymous"></script>
+<link href="./static/css/styles3.css" rel="stylesheet" />
+<link href="./static/css/exWarrior1.css" rel="stylesheet" />
+<style></style>
+{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('./static/img/yoga.jpg'); background-size: cover;">
+</header>
+
+<div class="button-container left-button">
+    <a href="exDowndog">Back</a>
+</div>
+<div class="button-container right-button">
+    <a href="exWarrior2">Next</a>
+</div>
+
+<div class="center-text">Warrior1</div>
+
+<div class="horizontal-boxes">
+    <div class="box">
+        <img src="./static/gif/Warrior1.gif" alt="워리어1 gif">
+    </div>
+    <div class="box">
+    <p class="text-style-1"><i class="fa-solid fa-pencil"></i> 바닥에 서서 오른쪽 다리를 내딛고, 왼쪽 다리를 뒤로 뻗으면서 손을 올려 자세를 만듭니다.</p>
+    <p class="text-style-1"><i class="fa-solid fa-pencil"></i> 엉덩이는 낮추도록 하고, 허벅지가 바닥과 평행을 이루도록 자세를 만드세요.</p>
+    <p class="text-style-1"><i class="fa-solid fa-pencil"></i> 자세를 유지하면서 5회~10회 이상 천천히 호흡하세요</p>
+    <p class="text-style-1"><i class="fa-solid fa-pencil"></i> 10초동안 자세를 유지하세요.</p>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<!-- Footer-->
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="small text-center text-muted fst-italic">Copyright © Fitech 2023</div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

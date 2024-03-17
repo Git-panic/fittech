@@ -1,0 +1,9 @@
+flask
+opencv-python
+mediapipe
+tensorflow==2.4.0
+flask-socketio
+flask_mysqldb
+pandas
+#pip install C:\mysqlclient-1.4.6-cp37-cp37m-win_amd64.whl
+#pip install flask_mysqldb
