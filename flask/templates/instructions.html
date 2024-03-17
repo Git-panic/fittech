@@ -1,0 +1,650 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>앱 이용 안내</title>
+<style>
+  @font-face {
+    font-family: 'komika_axisregular';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/212141/komikax_-webfont.woff2') format('woff2'), url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/212141/komikax_-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  main {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+
+  /* 새로운 스타일 */
+  :root {
+    --primary-color: #265c4a;
+    /* 짙은 녹색 */
+    --secondary-color: #489ca0;
+    /* 물의 푸른색 */
+    --accent-color: #f0e9e9;
+    /* 크림색 */
+    --text-color: #ffffff;
+    /* 흰색 텍스트 */
+    --button-color: #2E8B57;
+    /* 버튼 색상 */
+    --button-hover-bg: #416f8c;
+    /* 호버 시 버튼 배경색 */
+    --button-hover-text: #cccccc;
+    /* 호버 시 버튼 텍스트 색상 */
+  }
+
+  body {
+    color: var(--text-color);
+    background-color: var(--primary-color);
+  }
+
+  .new,
+  button,
+  .btns,
+  a.cta {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px !important;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'SUITE-Regular', sans-serif !important;
+  }
+
+  button:hover,
+  .btns:hover,
+  a.cta:hover {
+    background-color: var(--button-hover-bg);
+    /* 버튼 호버 배경색 */
+    color: var(--button-hover-text);
+    /* 버튼 호버 텍스트 색상 */
+  }
+
+  .card {
+    font-family: 'komika_axisregular', sans-serif;
+    background-color: var(--accent-color);
+    border-radius: 8px;
+    padding: 20px;
+    /* margin-right:10px; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 600px !important;
+    /* 모든 카드의 높이를 고정합니다 */
+    display: flex;
+    /* Flexbox 사용 */
+    flex-direction: column;
+    /* 세로 방향 정렬 */
+    /*justify-content: center;*/
+    /* 내용을 수직 중앙 정렬 */
+  }
+
+
+
+  .card__price,
+  .card__bullets,
+  .card__cta {
+    font-family: 'SUITE-Regular', sans-serif !important;
+
+    /* 폰트 적용 */
+  }
+
+  ul.card__bullets.flow {
+    margin-right: 25px;
+  }
+
+  .card__heading {
+    font-family: 'komika_axisregular', sans-serif;
+    /* 폰트 적용 */
+  }
+
+  header.masthead {
+    background-image: url('./static/img/yoga.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .btn-open {
+    margin-top: 70px;
+    /*여기! 버튼 아래위치 170*/
+  }
+
+  .card-body {
+    display: flex;
+    /* Flex 컨테이너 설정 */
+    flex-direction: column;
+    /* 자식 요소들을 세로로 배치 */
+    /*justify-content: center;여기!*/
+    /* 수직 방향으로 가운데 정렬 */
+    align-items: center;
+    /* 수평 방향으로 가운데 정렬 */
+    text-align: center;
+    /* 텍스트 가운데 정렬 */
+    height: 100%;
+    /* 부모 요소(.card)의 전체 높이를 차지하도록 설정 */
+  }
+
+  .btns,
+  .card__cta {
+    display: block;
+    /* 블록 요소로 만들어 자동 마진 적용 가능 */
+    margin: 0 auto;
+    /* 위 아래 마진 0, 좌우 마진 자동으로 가운데 정렬 */
+    width: fit-content;
+    /* 버튼의 너비를 내용에 맞춤 */
+  }
+
+  .btns {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    border: solid 1px transparent;
+    font-weight: bold;
+  }
+
+
+  .btn-close {
+    background: #0d0d0d;
+    color: #fff;
+    width: 100px;
+    height: 30px;
+    position: absolute;
+    /* Position the button absolutely within the dialog */
+    top: 10px;
+    /* Adjust as necessary for your layout */
+    right: 10px;
+  }
+
+  dialog {
+    border: none;
+    position: relative;
+    border-radius: 0.25rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    width: 660px;
+    /* Adjust the width as needed */
+    height: 700px;
+    /* Adjust the height as needed */
+    text-align: center;
+    margin: auto;
+    place-items: center;
+    background-color: #ffffff;
+    overflow: hidden;
+    /* Hide any content that exceeds the modal dimensions */
+    padding: 0;
+    /* Remove padding if unnecessary */
+  }
+
+  .icon {
+    font-size: 4rem;
+  }
+
+  .text-content {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+
+  #playButton2,
+  #playButton3 {
+    margin-top: 75px;
+    /* Adjust the space above the button */
+    margin-bottom: 10px;
+    /* Adjust the space below the button */
+  }
+
+  #playButton1 {
+    margin-top: 50px;
+    /* No margin at the top for the first button */
+  }
+
+  video#cameraStream {
+    max-width: 100%;
+    /* Ensures video does not exceed the dialog width */
+    height: auto;
+    /* Maintains aspect ratio */
+  }
+
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    /* 버튼을 일렬로 정렬하고 간격을 동일하게 분배합니다 */
+    align-items: baseline;
+    /* 모든 버튼을 수직으로 기준선 정렬로 설정합니다 */
+  }
+
+
+  #playButton1 {
+
+    margin-right: 10px;
+    /* #playButton1 오른쪽에 10px 마진을 추가하여 간격을 띄웁니다 */
+  }
+
+  #playButton2 {
+
+    margin-right: 10px;
+    /* #playButton1 오른쪽에 10px 마진을 추가하여 간격을 띄웁니다 */
+  }
+
+  .button-container button {
+    width: 100px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .card .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+  }
+
+
+
+
+
+
+  .btn-open,
+  .cta,
+  .button-container button {
+    width: fit-content;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-weight: bold;
+    border-radius: 5px !important;
+    border: none;
+    cursor: pointer;
+    font-family: 'SUITE-Regular', sans-serif !important;
+  }
+
+  .btn-open:hover,
+  .cta:hover,
+  .button-container button:hover {
+    background-color: var(--button-hover-bg);
+    color: var(--button-hover-text);
+  }
+
+  /* CSS for step1 */
+
+
+  .radio-container{
+    transform: translateY(-60px);
+  }
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    /* 각 버튼을 동일한 간격으로 배치 */
+    margin-top: 20px;
+    transform: translateY(-60px);
+    /* 버튼과 상단 간격 조절 */
+  }
+
+
+  .button-container2 {
+    display: flex;
+    /* 각 버튼을 동일한 간격으로 배치 */
+    margin-top: 115px;
+    /* 버튼과 상단 간격 조절 */
+  }
+
+  .button-container3 {
+    display: flex;
+    /* 각 버튼을 동일한 간격으로 배치 */
+    transform: translateY(-40px);
+    margin-top: 10px;
+    /* 버튼과 상단 간격 조절 */
+  }
+
+  .btn-open {
+    transform: translateY(-70px);
+    /* 버튼을 위로 이동시킵니다. */
+  }
+
+  .custom-h01 {
+    transform: translateY(20px);
+  }
+
+  .custom-h02 {
+    transform: translateY(29px);
+  }
+
+  .custom-h03 {
+    transform: translateY(-14px);
+  }
+
+  .custom-p01 {
+    transform: translateY(24px);
+  }
+
+  .custom-p02 {
+    transform: translateY(23px);
+  }
+
+  .custom-p03 {
+    transform: translateY(-20px);
+  }
+
+  .custom-ul01 {
+    /* 원하는 스타일을 추가하세요 */
+    transform: translateY(15px);
+  }
+
+  .custom-ul02 {
+    /* 원하는 스타일을 추가하세요 */
+    transform: translateY(10px);
+  }
+
+  .custom-ul03 {
+    /* 원하는 스타일을 추가하세요 */
+    transform: translateY(-33px);
+  }
+
+  .camera-overlay {
+    position: absolute;
+    top: 350px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    /* Adjust as needed */
+    height: 400px;
+    /* Adjust as needed */
+    border: 3px solid white;
+    /* Visible border */
+    pointer-events: none;
+    /* Allows clicks to pass through */
+  }
+
+  .button-container button {
+    background-color: transparent;
+    /* 배경색을 투명으로 설정 */
+  }
+
+  .button-container button:hover {
+    background-color: transparent;
+    /* 호버 시 배경색을 투명으로 유지 */
+    /* 다른 호버 시 스타일 속성들 */
+  }
+
+  .button-container button.active {
+    background-color: #2E8B57;
+    /* 클릭된 버튼에 원하는 배경색을 적용하세요 */
+    color: #ffffff;
+    /* 클릭된 버튼에 원하는 글자색을 적용하세요 */
+  }
+
+  .circle {
+    width: 30px;
+    height: 30px;
+    background-color: blue;
+    border-radius: 50%;
+    position: absolute;
+    transition: left 0.5s ease-in-out;
+  }
+
+
+
+
+
+  /* 다음 내용까지는 여전히 위에 위치하도록 설정 */
+</style>
+<link href="./static/css/styles3.css" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('./static/img/yoga.jpg'); background-size: cover;">
+</header>
+
+
+<main>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+      <div class="card">
+
+        <div class="card-body">
+          <div class="step1">
+            <h2 class="card__heading custom-h01">Step 01</h2>
+            <p class="card__price custom-p01"><strong>카메라 접근을 허용해주세요!</strong></p>
+            <ul role="list" class="card__bullets flow custom-ul01">
+              <li>카메라 접근 권한을 허용하고
+              </li>
+              <li>화면 안에 전신이 나오도록<br>
+                <br>
+                카메라의 각도와 위치를 <br>조정해주세요
+              </li>
+            </ul>
+          </div>
+          <div class="button-container2">
+            <button class="btn-open" class="btns" id="new">카메라 켜기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card__heading custom-h02">Step 02</h2>
+          <p class="card__price custom-p02"><strong>노래를 선택해주세요</strong></p>
+
+          <ul role="list" class="card__bullets flow custom-ul02">
+            <li>3 가지 테마의 음악이 <br> 준비되어있으니,
+            </li>
+            <br>
+            <li>마음에 드는 음악을 <br> 선택해주세요</li>
+          </ul>
+          <div class="button-container">
+            <button id="playButton1" data-button="brid">🐦</button>
+            <button id="playButton2" data-button="piano">🎹</button>
+            <button id="playButton3" data-button="river">🌊</button>
+          </div>
+
+          <div class="radio-container">
+            <label><input type="radio" name="options" value="bird" checked>Bird</label>
+            <label><input type="radio" name="options" value="piano">Piano</label>
+            <label><input type="radio" name="options" value="river">River</label>
+          </div>
+          <audio id="audioPlayer1" src="{{ url_for('static', filename='mp3/bird.mp3') }}"></audio>
+          <audio id="audioPlayer2" src="{{ url_for('static', filename='mp3/piano.mp3') }}"></audio>
+          <audio id="audioPlayer3" src="{{ url_for('static', filename='mp3/river.mp3') }}"></audio>
+
+
+          <!-- <ul role="list" class="card__bullets flow">
+            <li>화면에 나타나는 이미지와
+              <br>동일한 자세를 취하세요
+            </li>
+            <li>정확한 자세를 취하면 어플리케이션은 <br>실시간으로 이를 분석하고 피드백을 제공하여 <br>올바른 자세 학습을 도와 줄 거에요</li>
+            <li>이미지와 일치하는 포즈를 유지하면 <br>교정의 효과를 높일 수 있어요</li>
+          </ul> -->
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="step3">
+            <h2 class="card__heading custom-h03">Step 03</h2>
+          </div>
+          <p class="card__price custom-p03"><strong>운동을 시작해주세요</strong></p>
+          <ul role="list" class="card__bullets flow custom-ul03">
+            <!-- <li>지시에 따라 정확한 자세를 취한 후, 화면에 나타나는 <br>안내에 따라 최소 30초간 자세를 유지하세요</li>
+            <br> -->
+            <li>화면에 나타나는 지시에 따라 <br>30초간 자세를 유지하세요</li>
+            <br>
+            <li>잘못된 자세로 수행할 경우 <br>피드백이 제공됩니다</li>
+            <br>
+            <!-- <li>아래의 버튼을 클릭하여<br> 시작해보세요</li> -->
+          </ul>
+          <div class="button-container3">
+            <a href="exDowndog" id="startLink" class="card__cta cta">시작하기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+<section>
+  <dialog>
+    <span class="icon">📷</span>
+    <div class="text-content">
+      <video id="cameraStream" autoplay></video>
+      <div class="camera-overlay"></div>
+    </div>
+    <button class="btn-close" class="btns" autofocus></button>
+  </dialog>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function startCamera() {
+    navigator.mediaDevices.getUserMedia({
+      video: { width: 640, height: 480 } // 카메라 해상도 설정
+    })
+      .then(stream => {
+        let video = document.getElementById('cameraStream');
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        console.error("카메라 접근 에러: ", err);
+      });
+  }
+
+  // 카메라 스트림을 종료하는 함수
+  function stopCamera() {
+    let video = document.getElementById('cameraStream');
+    if (video.srcObject) {
+      video.srcObject.getTracks().forEach(track => track.stop());
+    }
+  }
+
+  // 모달창 열기 및 카메라 시작
+  const modal = document.querySelector('dialog');
+  const btnOpenModal = document.querySelector('.btn-open');
+  btnOpenModal.addEventListener('click', () => {
+    modal.showModal();
+    startCamera(); // 카메라 시작
+  });
+
+  // 모달창 닫기 및 카메라 정지
+  const btnCloseModal = document.querySelector('.btn-close');
+  btnCloseModal.addEventListener('click', () => {
+    modal.close();
+    stopCamera(); // 카메라 정지
+  });
+
+  $(document).ready(function () {
+    // "시작하기" 링크 클릭 이벤트
+    $('#startLink').click(function (e) {
+      // 선택한 라디오 버튼 값 가져오기
+      var selectedValue = $('input[name="options"]:checked').val();
+
+      // 선택한 값을 서버로 전송
+      $.ajax({
+        url: '/send_selected_value',
+        type: 'POST',
+        data: {
+          selectedValue: selectedValue
+        },
+        success: function (response) {
+          console.log(response);
+          // 이후 필요한 동작 수행
+
+          // 이후에 하이퍼링크의 기본 동작을 실행
+          window.location.href = $('#startLink').attr('href');
+        },
+        error: function (error) {
+          console.error(error);
+        }
+      });
+
+    });
+  });
+
+
+  var playButton1 = document.getElementById('playButton1');
+  var audioPlayer1 = document.getElementById('audioPlayer1');
+
+  var playButton2 = document.getElementById('playButton2');
+  var audioPlayer2 = document.getElementById('audioPlayer2');
+
+  var playButton3 = document.getElementById('playButton3');
+  var audioPlayer3 = document.getElementById('audioPlayer3');
+
+  function stopAndResetButtons(currentAudio, currentButton) {
+    // 모든 오디오 일시 정지
+    audioPlayer1.pause();
+    audioPlayer2.pause();
+    audioPlayer3.pause();
+
+    // 모든 버튼 아이콘 원래대로 변경
+    playButton1.innerHTML = '🐦';
+    playButton2.innerHTML = '🎹';
+    playButton3.innerHTML = '🌊';
+
+    // 모든 버튼의 active 클래스 제거
+    playButton1.classList.remove('active');
+    playButton2.classList.remove('active');
+    playButton3.classList.remove('active');
+
+    // 현재 재생 중인 오디오 재생
+    currentAudio.play();
+
+    // 현재 버튼 아이콘 변경
+    currentButton.innerHTML = 'Stop';
+    currentButton.classList.add('active');
+  }
+
+  playButton1.addEventListener('click', function () {
+    if (audioPlayer1.paused) {
+      stopAndResetButtons(audioPlayer1, playButton1);
+    } else {
+      audioPlayer1.pause();
+      playButton1.innerHTML = '🐦';
+      playButton1.classList.remove('active'); // 색상 클래스 제거
+    }
+  });
+
+  playButton2.addEventListener('click', function () {
+    if (audioPlayer2.paused) {
+      stopAndResetButtons(audioPlayer2, playButton2);
+    } else {
+      audioPlayer2.pause();
+      playButton2.innerHTML = '🎹';
+      playButton1.classList.remove('active'); // 색상 클래스 제거
+    }
+  });
+
+  playButton3.addEventListener('click', function () {
+    if (audioPlayer3.paused) {
+      stopAndResetButtons(audioPlayer3, playButton3);
+    } else {
+      audioPlayer3.pause();
+      playButton3.innerHTML = '🌊';
+      playButton1.classList.remove('active'); // 색상 클래스 제거
+    }
+  });
+
+</script>
+{% endblock %}
+
+
+{% block footer %}
+<script src="./static/js/prepare1.js"></script>
+
+{% endblock %}

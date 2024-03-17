@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!-- <link href="./static/css/styles.css" rel="stylesheet" /> -->
+{% endblock %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+    }
+    .display-4, .p-5{
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+</style>
+<header class="masthead" style="background-image: url('/static/img/yoga.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Yoga</h1>
+                    <span class="subheading">내면의 평화를 찾아보세요</span>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="instructions" style="background-color: #2E8B57; border-color: #2E8B57;">start</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Content section 1-->
+<section id="scroll">
+<div class="container px-5">
+    <div class="row gx-5 align-items-center">
+        <div class="col-lg-6 order-lg-2">
+            <div class="p-5"><img class="img-fluid rounded-circle" src="/static/img/yoga2.jpg" alt="..." /></div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+                <h2 class="display-4" >요가를 배우세요.</h2>
+                <p>AI와 함께 올바른 자세로 요가를 수행하면 운동의 효과를 극대화할 수 있습니다. 제대로 된 자세로 움직이면 근육과 관절을 올바르게 활용하여 요가의 잠재력을 최대한 발휘할 수 있습니다. AI는 사용자의 요가 자세를 분석하여 평가하고 개선점을 파악합니다. AI는 사용자에게 실시간으로 피드백을 제공하여 자세를 개선하는 데 도움을 주며 잘못된 자세를 감지하고 조언을 제공합니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- Content section 2-->
+<section>
+<div class="container px-5">
+    <div class="row gx-5 align-items-center">
+        <div class="col-lg-6">
+            <div class="p-5"><img class="img-fluid rounded-circle" src="/static/img/diary.jpg" alt="..." /></div>
+        </div>
+        <div class="col-lg-6">
+            <div class="p-5">
+                <h2 class="display-4" >운동과 감정을<br> 기록하세요.</h2>
+                <p>운동과 감정 상태를 기록하면 감정과 신체 활동이 서로 어떻게 영향을 미치는지 더 잘 인식할 수 있습니다. 또한 운동 루틴과 감정적 반응을 추적하여 패턴을 식별할 수 있습니다. 운동과 감정을 기록하면 보다 구체적인 목표 설정이 가능합니다. 또한 강력한 동기 부여가 되어 규칙적인 운동을 할 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- Content section 3-->
+<section>
+<div class="container px-5">
+    <div class="row gx-5 align-items-center">
+        <div class="col-lg-6 order-lg-2">
+            <div class="p-5"><img class="img-fluid rounded-circle" src="/static/img/peace.jpg" alt="..." /></div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+                <h2 class="display-4">내면의 평화를 <br>찾으세요.</h2>
+                <p>요가는 신체 근육을 스트레칭하고 탄탄하게 만들어주며 유연성을 향상시킵니다. 신체 뿐만 아니라 정신 건강 또한 증진시킵니다. 요가는 스트레스를 완화하고 휴식을 촉진하여 스트레스 호르몬인 코티솔 수치를 줄일 수 있습니다. 명상과 호흡 운동을 통해 주의력과 집중력을 향상시키는 데 도움이 됩니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}
+
+
+{% block footer %}
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Fitech 2023</p></div>
+    </footer>
+{% endblock %}

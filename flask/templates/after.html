@@ -1,0 +1,770 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<link href="{{ url_for('static', filename='css/styles3.css') }}" rel="stylesheet" />
+<!-- Additional CSS and JavaScript links can be included here -->
+<style>
+    @font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    /* 기본 스타일 설정 */
+    body {
+        background-color: #f4f4f4;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+        /* Apply the font to the entire body */
+        /* ... other styles ... */
+    }
+
+    /* 메인 컨텐츠 스타일 */
+    .content {
+        flex: 1 0 auto;
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    /* 제목 중앙 정렬 */
+    .title {
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .section {
+        margin-top: 40px;
+        /* Adds space at the top of the section */
+        margin-bottom: 40px;
+        /* Adds space at the bottom of the section */
+        width: 100%;
+        /* Ensures the section takes full width */
+        clear: both;
+        /* Clears floated elements, if any */
+    }
+
+    /* 푸터 스타일 */
+    footer {
+        width: 100%;
+        flex-shrink: 0;
+        text-align: center;
+        padding: 20px 0;
+        background-color: #f8f8f8;
+    }
+
+
+    .title {
+        font-size: 24px;
+        /* Title size */
+        margin-bottom: 20px;
+        /* Space between title and content */
+    }
+
+    #grading-interface {
+        font-size: 16px;
+        /* Adjust base font size as needed */
+    }
+
+    .grade-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .grade-circle {
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+
+    .custom-p01 {
+        transform: translateY(-20px);
+    }
+
+    .custom-p02 {
+        transform: translateY(-24px);
+    }
+
+    .custom-p03 {
+        transform: translateY(-24px);
+    }
+
+    .grade-letter {
+        font-size: 2em;
+        /* 32px if base font size is 16px */
+        font-weight: bold;
+    }
+
+    .grade-score {
+        font-size: 1em;
+        /* 16px if base font size is 16px */
+    }
+
+    .icons {
+
+        display: flex;
+        justify-content: center;
+    }
+
+    .icon img {
+        width: 100px;
+        /* 이미지 크기를 80px에서 100px로 조정 */
+        height: 100px;
+        /* 이미지 크기를 80px에서 100px로 조정 */
+        margin-bottom: 10px;
+        /* 이미지와 텍스트 사이의 간격을 조금 더 늘림 */
+    }
+
+    .icon {
+        margin: 50px 20px;
+        /* 아이콘 간의 좌우 간격을 15px에서 20px로 늘림 */
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+    }
+
+    .icon-description {
+        margin-top: 4px;
+        text-align: center;
+        font-size: 0.75em;
+        /* Smaller font size for descriptions */
+    }
+
+    .feedbackForm .btn {
+        float: right;
+        /* 오른쪽 정렬 */
+        margin-right: 5px;
+        /* 기록하기 버튼 마진 조정 */
+    }
+
+    .button-container {
+        display: flex;
+        margin-left: 30px;
+        justify-content: center;
+        /* This will center the button */
+        margin-top: 10px;
+        /* Add some space above the button if needed */
+    }
+
+    .next-session-buttons {
+        text-align: center;
+        margin-left: 30px;
+        /* 버튼을 중앙에 위치 */
+    }
+
+    .feedbackForm .btn,
+    .next-session-buttons .btn,
+    .btn-primary {
+        margin: 10px;
+        /* 모든 버튼의 마진 조정 */
+        padding: 10px 15px;
+        /* 모든 버튼의 패딩 조정 */
+        font-size: 16px;
+        /* 텍스트 크기 조정 */
+        line-height: 1.5;
+        /* 라인 높이 조정 */
+        border-radius: 5px;
+        /* 테두리 반경 조정 */
+        /* 버튼 크기를 일관되게 조정 */
+    }
+
+    .btn-warning {
+        background-color: #a9a9a9;
+        /* 달력보기 버튼 색상 변경 */
+        border-color: #b0c4de;
+        /* 달력보기 버튼 테두리 색상 변경 */
+        color: white;
+        /* 글자 색상 변경 */
+        text-decoration: none;
+        /* 텍스트 꾸미기 제거 */
+    }
+
+    .btn-warning:hover,
+    .btn-warning:focus {
+        background-color: #757575;
+        /* 마우스 오버시 달력보기 버튼 색상 변경 */
+        color: white;
+        /* 글자 색상 유지 */
+    }
+
+    .btn-warning:active {
+        background-color: #757575;
+        /* 클릭 시 색상 변경 */
+        color: white;
+        /* 글자 색상 유지 */
+    }
+
+    .btn-warning:focus {
+        box-shadow: none;
+        /* 클릭 시 노란색 테두리 제거 */
+    }
+
+
+
+    .image-box {
+        border: 1px solid #ddd;
+        /* 테두리 스타일 */
+        width: 200px;
+        /* 너비 설정 */
+        height: 200px;
+        /* 높이 설정 - 정사각형 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f8f8;
+        /* 배경색 */
+        margin-right: 10px;
+        /* 첫 번째 이미지 박스와 두 번째 이미지 박스 사이의 간격 */
+    }
+
+    /* 페이지 컨텐츠의 너비를 확장 */
+    .container {
+        width: 90%;
+        /* 컨테이너의 너비를 90%로 조정 */
+        max-width: 1200px;
+        /* 최대 너비 설정 */
+    }
+
+
+    .image-box img {
+        width: 100%;
+        /* The image will fill the width of its container */
+        height: 100%;
+        /* The image will fill the height of its container */
+        object-fit: cover;
+        /* The image will cover the container, cropping if necessary */
+        display: block;
+        /* 이미지 전체가 보이도록 조정 */
+    }
+
+    /* 요약 섹션 스타일 */
+    .summary-section {
+        font-family: 'SUITE-Regular';
+        background-color: #f9f9fb;
+        /* Light background color */
+        border-radius: 10px;
+        /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow */
+        padding: 20px;
+        /* Padding inside the container */
+        margin-top: 20px;
+        /* Space from top */
+        margin-bottom: 40px;
+        /* Space from bottom */
+        max-width: 400px;
+        /* Maximum width */
+        margin-left: auto;
+        /* Centering the block */
+        margin-right: auto;
+        text-align: center;
+        /* Center align text */
+        border: 2px solid #cccccc;
+        /* Border color */
+    }
+
+    /* 요약 섹션의 제목 스타일 */
+    .summary-section h2 {
+        font-family: 'SUITE-Regular';
+        color: #ff79c6;
+        /* Title color */
+        padding-bottom: 10px;
+        /* Space below the title */
+        border-bottom: 2px solid #ff79c6;
+        /* Title underline */
+        margin-bottom: 20px;
+        margin-top: 0px;
+        /* Space below the underline */
+        font-size: 1.5em;
+        /* Font size */
+    }
+
+    /* 요약 섹션 리스트 스타일 */
+    .summary-section ul {
+        list-style-type: none;
+        /* No bullets */
+        padding: 0;
+        /* Remove padding */
+        margin: 0;
+        /* Remove margin */
+    }
+
+    .summary-section ul li {
+        color: #333333;
+        /* Text color */
+        font-weight: bold;
+        /* Make the font bold */
+        margin-bottom: 10px;
+        /* Space between list items */
+        font-size: 1.2em;
+        /* Font size */
+    }
+
+    /* 감정기록 폼 스타일 */
+    .feedbackForm {
+        width: 70%;
+        /* 폼의 폭을 좌우 여백을 줄이고 95%로 설정 */
+        margin: 20px auto 30px;
+        /* 자동 마진으로 중앙 정렬 */
+    }
+
+    /* 피드백 텍스트 영역 스타일 */
+    .feedbackForm {
+        width: 100%;
+        margin-top: 20px;
+        /* 입력 필드의 폭을 폼의 폭과 동일하게 설정 */
+    }
+
+    .form-group {
+        margin-top: 20px;
+        width: 940px;
+        margin-left: 30px;
+        transform: translateY(15px);
+        /* 입력 필드의 폭을 폼의 폭과 동일하게 설정 */
+    }
+
+    .feedbackForm textarea {
+        width: 100%;
+        /* 텍스트 영역의 폭을 폼의 폭과 동일하게 설정 */
+        margin-bottom: 30px;
+        /*
+         텍스트 영역 하단 여백 설정 */
+    }
+
+    .content,
+    .content * {
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+
+    @font-face {
+        font-family: 'komika_axisregular';
+        src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/212141/komikax_-webfont.woff2') format('woff2'), url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/212141/komikax_-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .grade-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+        background-color: #EC6F86;
+        color: #FFF;
+        font-family: 'komika_axisregular', sans-serif;
+        font-size: 2em;
+        /* Start with a base font size */
+        flex-direction: column;
+        /* Stack children vertically */
+    }
+
+    .grade-letter {
+        font-size: 2em;
+        /* relative to the parent font size */
+        line-height: 1;
+        /* Adjust if necessary to fit the circle */
+        margin-bottom: 0.25em;
+        /* Adds space below the grade letter */
+    }
+
+    .grade-score {
+        font-size: 0.5em;
+        /* relative to the parent font size */
+        line-height: 1;
+        /* Adjust if necessary to fit the circle */
+        margin-top: -0.25em;
+        /* Negative margin to bring grade score closer to grade letter if needed */
+    }
+
+    #button,
+    .your-button-class {
+        background-color: #2E8B57;
+        /* Soft blue */
+        /* other styles if needed */
+    }
+
+    /*복붙*/
+    .services {
+        margin-bottom: 3em;
+    }
+
+    .services .icon {
+        float: left;
+        width: 80px;
+        /* Width of the icon */
+        height: 80px;
+        /* Height of the icon */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /*background: whitesmoke;*/
+        border-radius: 50%;
+        /* Circular shape */
+        overflow: hidden;
+        /* Ensures content doesn't spill outside the circle */
+        margin-right: -20px;
+        /* Adjust as needed */
+    }
+
+    .services .icon img {
+        max-width: 70%;
+        /* Ensure the image doesn't exceed the icon's width */
+        max-height: 70%;
+        /* Ensure the image doesn't exceed the icon's height */
+        object-fit: contain;
+        /* Ensures the entire image fits within the container */
+    }
+
+    .services .icon i {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 60px;
+        color: #000;
+    }
+
+    .services .desc {
+        padding-left: 100px;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+
+    .services .desc h3 {
+        color: #000;
+        font-size: 28px;
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+
+    .move-left {
+        margin-left: -50px;
+        /* Adjust value as needed */
+    }
+
+    .moveright {
+        margin-left: 35px;
+        /* Adjust value as needed */
+    }
+
+    ul {
+        list-style-type: none;
+        /* 리스트 스타일 제거 */
+    }
+
+    .services .desc ul {
+        margin-left: -33px;
+    }
+
+    .services .desc p {
+        margin-top: 37px;
+    }
+
+    /* 플레이스홀더 스타일 */
+    #feedback::placeholder {
+        color: gray;
+        /* 회색 플레이스홀더 텍스트 색상 */
+    }
+
+    /* 클릭 시 플레이스홀더 숨김 */
+    #feedback:focus::placeholder {
+        color: transparent;
+        /* 클릭 시 플레이스홀더 텍스트 숨김 */
+    }
+
+    .emotion-recording {
+        background-color: transparent;
+        /* 배경을 투명하게 설정 */
+        border: none;
+        /* 테두리 제거 */
+    }
+
+    .emoji-buttons {
+        background-color: transparent;
+        transform: translateY(15px);
+        /* 배경을 투명하게 설정 */
+    }
+
+    .emoji-btn {
+        background-color: transparent;
+        /* 배경을 투명하게 설정 */
+        border: none;
+        /* 테두리 제거 */
+    }
+
+    .emoji-display {
+        background-color: transparent;
+        /* 배경을 투명하게 설정 */
+        border: none;
+        /* 테두리 제거 */
+    }
+
+    #colorlib-services {
+        margin-top: 500px;
+        /* 상단 여백을 0으로 설정 */
+    }
+
+    .custom-margin-bottom {
+        margin-bottom: 50px;
+        /* Change this value to your desired margin */
+    }
+
+    h2,
+    h3 {
+        color: #265c4a;
+        /* Deep green for headings */
+    }
+
+    .workout-results-box {
+        background-color: white;
+        /* Light background color */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        /* Space between boxes */
+    }
+
+    /* Emotion Record Box Styles */
+    .emotion-record-box {
+        width: 1035px;
+        margin: 0 auto;
+        /*중앙정렬
+        margin-left: 320px;*/
+        background-color: white;
+        /* Light background color */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: 310px;
+    }
+
+    .result {
+        font-size: 28px;
+        font-family: 'SUITE-Regular', 'sans-serif';
+        transform: translateY(15px);
+
+    }
+
+    .record {
+        text-align: center;
+        font-family: 'SUITE-Regular', 'sans-serif';
+        transform: translateY(15px);
+    }
+
+    .emoji-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .emoji-buttons {
+        flex-grow: 1;
+        /* 가운데로 확장되도록 설정 */
+        margin-right: 10px;
+        /* 선택적으로 여백 조정 가능 */
+    }
+
+    .emoji-display {
+        transform: translateY(16px);
+        order: -1;
+        /* 순서를 지정하여 emoji-display를 왼쪽에 배치합니다 */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('./static/img/yoga.jpg'); background-size: cover;">
+</header>
+
+<section class="h-100">
+    <div class="container custom-margin-bottom mt-5">
+        <div id="colorlib-page">
+            <div id="colorlib-services " style="text-align: center;">
+                <div class="container">
+                    <div class="workout-results-box">
+                        <div class="row moveright">
+
+                            <div class="col-md-12 text-center">
+                                <h2 class="result">
+                                    오늘의 운동 결과</h2>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 animate-box">
+                                <div class="services">
+                                    <span class="icon"><img src="{{ url_for('static', filename='img/time.jpg') }}"
+                                            alt="Time Icon"><i class="icon-pen3"></i></span>
+                                    <div class="desc">
+                                        <h3 class="custom-p01">시간</h3>
+                                        <p>{{ time_difference }} 분</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 animate-box">
+                                <div class="services move-left">
+                                    <span class="icon"><img src="{{ url_for('static', filename='img/count.jpg') }}"
+                                            alt="Time Icon"><i class="icon-diamond"></i></span>
+                                    <div class="desc">
+                                        <h3 class="custom-p02">동작 개수</h3>
+                                        <p>3</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 animate-box">
+                                <div class="services">
+                                    <span class="icon"><img src="{{ url_for('static', filename='img/list.jpg') }}"
+                                            alt="Time Icon"><i class="icon-paperplane"></i></span>
+                                    <div class="desc">
+                                        <h3 class="custom-p03">동작 종류</h3>
+                                        <ul>
+                                            <li>Downdog</li>
+                                            <li>Warrior1</li>
+                                            <li>Warrior2</li>
+                                        </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feedback Form -->
+    <div class="mt-4  feedbackForm section">
+        <!-- <h2 style="font-size: 28px;  text-align: center; font-family: 'SUITE-Regular', sans-serif;">감정기록</h2>
+            <p style="  text-align: center; font-family: 'SUITE-Regular', sans-serif;">지금의 감정을 기록해봐요!</p>-->
+        <!-- Emotion Emoji Buttons -->
+        <div class="emotion-record-box mt-5 ">
+            <div class="emotion-recording moveright">
+                <h3 class="record">오늘의 일기</h3>
+                <div class="emoji-container">
+                    <div class="emoji-buttons" style="text-align: center;">
+                        <button class="emoji-btn" data-emotion="excited">😆</button>
+                        <button class="emoji-btn" data-emotion="happy">😊</button>
+                        <button class="emoji-btn" data-emotion="soso">😑</button>
+                        <button class="emoji-btn" data-emotion="angry">😠</button>
+                        <button class="emoji-btn" data-emotion="sad">😢</button>
+                    </div>
+                    <div class="emoji-display">
+                        <span id="selectedEmojiDisplay"></span>
+                    </div>
+                </div>
+            </div>
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" id="feedback" rows="3"
+                        placeholder="예)내가 감사하게 여기는 것, 오늘을 기분 좋게 만드는 것, 오늘의 다짐"></textarea>
+                </div>
+                <div class="button-container">
+                    <button class="btn btn-primary" id="button">기록하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Next Session Recommendation -->
+    <div class="mt-4 mb-5 section">
+        <div class="next-session-buttons">
+            <a href="{{ url_for('home') }}" class="btn btn-warning">끝내기</a>
+        </div>
+    </div>
+    </div>
+</section>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Define a mapping of emoji characters to names
+        var emojiMap = {
+            '😆': 'excited',
+            '😊': 'happy',
+            '😑': 'soso',
+            '😠': 'angry',
+            '😢': 'sad'
+        };
+
+        var selectedEmoji = '';
+        var selectedEmojiName = '';
+
+        // Get all emoji buttons and set up click event listeners
+        var emojiButtons = document.querySelectorAll('.emoji-btn');
+        emojiButtons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                selectedEmoji = this.textContent; // Set the selected emoji
+                selectedEmojiName = emojiMap[selectedEmoji]; // Set the selected emoji's name
+                document.getElementById('selectedEmojiDisplay').textContent = selectedEmoji; // Update the display
+            });
+        });
+
+        // Handle form submission
+        document.querySelector("form").onsubmit = function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var memoText = document.getElementById("feedback").value.trim(); // Get the memo text
+            // Combine emoji name with memo text
+            var combinedMemo = selectedEmojiName ? selectedEmojiName + ' ' + memoText : memoText;
+
+            // Create your request payload with the combined memo
+            var requestData = {
+                date: new Date().toISOString().slice(0, 10), // Get the current date in YYYY-MM-DD format
+                memo: combinedMemo
+            };
+
+            // Send the combined memo to the server
+            fetch('/add_memo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify(requestData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Memo saved successfully');
+                        // Clear the form and provide a success message
+                        document.getElementById("feedback").value = ''; // Clear the textarea
+                        document.getElementById('selectedEmojiDisplay').textContent = ''; // Clear the selected emoji display
+                        // alert('Memo added successfully');
+                        console.log('메모잘됨');
+                        window.location.href = "{{ url_for('cal.calendar') }}";
+                    } else {
+                        throw new Error('Error saving memo: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error: ' + error);
+                });
+        };
+    });
+</script>
+
+{% endblock %}
+
+{% block footer %}
+<!-- Include any necessary footer elements here -->
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="small text-center text-muted fst-italic">Copyright © Fitech 2023</div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}
