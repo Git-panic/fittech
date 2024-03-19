@@ -4,10 +4,10 @@ import pymysql
 try:
     # MySQL 연결 설정
     db = pymysql.connect(
-        host='admin.cdha8hslaur6.ap-northeast-2.rds.amazonaws.com',
+        host='database-1.cxoyk4wccpaa.eu-north-1.rds.amazonaws.com',
         port=3306,
-        user='root',
-        passwd='root1234',
+        user='admin',
+        passwd='1234!1234',
         db='users',
         charset='utf8'
     )
