@@ -31,7 +31,7 @@ def add_cal():
     memo = request.form.get('memo')
 
     cursor = db.cursor()
-    query = "INSERT INTO calendar4 (user_id, date, time, memo) VALUES (%s, %s, %s, %s)"
+    query = "INSERT INTO calendar (user_id, date, time, memo) VALUES (%s, %s, %s, %s)"
     cursor.execute(query, (user_id, date, time, memo))
     db.commit()
     cursor.close()
@@ -47,7 +47,7 @@ def get_event():
 
     # 날짜에 해당하는 데이터를 DB에서 검색합니다.
     cursor = db.cursor()
-    query = "SELECT time, memo FROM calendar4 WHERE user_id = %s AND date = %s"
+    query = "SELECT time, memo FROM calendar WHERE user_id = %s AND date = %s"
     cursor.execute(query, (user_id, selected_date,))
     data = cursor.fetchall()
     cursor.close()
