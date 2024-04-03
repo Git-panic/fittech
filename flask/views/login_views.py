@@ -12,7 +12,7 @@ def login():
         user_password = request.form['user_password']
 
         cursor = db.cursor()
-        cursor.execute("SELECT user_name, user_password FROM users WHERE user_id = %s", (user_id,))
+        cursor.execute("SELECT user_name, user_password FROM users2 WHERE user_id = %s", (user_id,))
         user_record = cursor.fetchone()
         cursor.close()
 
@@ -40,12 +40,12 @@ def register():
         user_password = request.form['user_password']
 
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM users WHERE user_id = %s", (user_id,))
+        cursor.execute("SELECT * FROM users2 WHERE user_id = %s", (user_id,))
         if cursor.fetchone():
             flash("ID가 이미 존재합니다. 다른 ID를 선택해주세요.", 'error')
             return redirect(url_for('log.login'))
 
-        cursor.execute("INSERT INTO users (user_name, user_id, user_password) VALUES (%s, %s, %s)",
+        cursor.execute("INSERT INTO users2 (user_name, user_id, user_password) VALUES (%s, %s, %s)",
                        (user_name, user_id, user_password))
         db.commit()
         cursor.close()
