@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!-- <link href="./static/css/styles.css" rel="stylesheet" /> -->
+{% endblock %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: 'SUITE-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+    }
+    .display-4, .p-5{
+        font-family: 'SUITE-Regular', Arial, sans-serif;
+    }
+</style>
+<header class="masthead" style="background-image: url('/static/img/yoga.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Yoga</h1>
+                    <span class="subheading">맞춤 요가 추천을 위한 설문</span>
+                    </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="">
+
+<!-- Content section 1-->
+<section id="scroll">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+            <div class="p-5 my-5">
+                <h2 class="py-5 text-center" >1. 당신의 성별은 무엇입니까?</h2>
+                <div class="container d-flex justify-content-center">
+                    <label class="btn">
+                        <input class="" type="radio" name="gender" value="male"> 남
+                    </label>
+                    <label class="btn">
+                        <input type="radio" name="gender" value="female"> 여    
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Content section 2-->
+    <section>
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="p-5 my-5">
+                    <h2 class="py-5 text-center" >2. 당신의 나이는 어떻게 되십니까?</h2>
+                    <div class="container d-flex justify-content-center">
+                        <label class="btn">
+                            <input class="" type="radio" name="age" value="10"> 10대
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="age" value="20"> 20대
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="age" value="30"> 30대
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="age" value="40"> 40대
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="age" value="50"> 50대
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="age" value="60"> 60이상
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content section 3-->
+    <section>
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="p-5 my-5">
+                    <h2 class="py-5 text-center" >3. 어떤 강도의 요가를 원하십니까?</h2>
+                    <div class="container d-flex justify-content-center">
+                        <label class="btn">
+                            <input class="" type="radio" name="difficulty" value="easy"> 쉽게
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="difficulty" value="nomal"> 적당하게
+                        </label>
+                        <label class="btn">
+                            <input class="" type="radio" name="difficulty" value="hard"> 어렵게
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content section 4-->
+    <section>
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="p-5 my-5">
+                    <h2 class="py-5 text-center" >4. 요가의 목적은 어떻게 되십니까?</h2>
+                    <div class="container d-flex justify-content-center">
+                        <label class="btn">
+                            <input class="" type="radio" name="purpose" value="diet"> 다이어트
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="purpose" value="bodyfix"> 체형교정
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="purpose" value="relax"> 심신안정
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="purpose" value="care"> 재활치료
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content section 5-->
+    <section>
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="p-5 my-5">
+                    <h2 class="py-5 text-center" >5. 집중적으로 관리하고 싶은 부위는 어디십니까?</h2>
+                    <div class="container d-flex justify-content-center">
+                        <label class="btn">
+                            <input class="" type="radio" name="body" value="neck"> 목, 어깨
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="body" value="chest"> 등, 가슴
+                        </label>
+                        <label class="btn">
+                            <input class="" type="radio" name="body" value="waist"> 배, 허리
+                        </label>
+                        <label class="btn">
+                            <input class="" type="radio" name="body" value="arm"> 팔
+                        </label>
+                        <label class="btn">
+                            <input class="" type="radio" name="body" value="leg"> 다리
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content section 6-->
+    <section>
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="p-5 my-5">
+                    <h2 class="py-5 text-center" >6. 하루에 얼마나 요가를 하시겠습니까?</h2>
+                    <div class="container d-flex justify-content-center">
+                        <label class="btn">
+                            <input class="" type="radio" name="time" value="10"> 10분 이내
+                        </label>
+                        <label class="btn">
+                            <input type="radio" name="time" value="20"> 10-30분
+                        </label>
+                        <label class="btn">
+                            <input class="" type="radio" name="time" value="30"> 30-60분
+                        </label>
+                        <label class="btn">
+                            <input class="" type="radio" name="time" value="60"> 60분 이상
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container d-flex justify-content-center mb-5">
+        <button type="submit" class="btn btn-primary btn-xl rounded-pill m-5">추천 요가 확인하기</button>
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block footer %}
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Fitech 2023</p></div>
+    </footer>
+{% endblock %}

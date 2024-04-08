@@ -44,6 +44,11 @@ app.register_blueprint(cal,url_prefix='/')
 def home():
     return render_template('home.html')
 
+# 요가 설문 페이지
+@app.route('/survey')
+def survey():
+    return render_template('survey.html')
+
 # 연락처 페이지
 @app.route('/contact')
 def contact():
