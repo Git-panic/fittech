@@ -30,24 +30,24 @@
 </header>
 
 <div class="">
-
-<!-- Content section 1-->
-<section id="scroll">
-    <div class="container px-5">
-        <div class="row gx-5 align-items-center">
-            <div class="p-5 my-5">
-                <h2 class="py-5 text-center" >1. 당신의 성별은 무엇입니까?</h2>
-                <div class="container d-flex justify-content-center">
-                    <label class="btn">
-                        <input class="" type="radio" name="gender" value="male"> 남
-                    </label>
-                    <label class="btn">
-                        <input type="radio" name="gender" value="female"> 여    
-                    </label>
+<form method="POST" action="/survey" class="survey" novalidate="" autocomplete="off">
+    <!-- Content section 1-->
+    <section id="scroll">
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="p-5 my-5">
+                    <h2 class="py-5 text-center" >1. 당신의 성별은 무엇입니까?</h2>
+                    <div class="container d-flex justify-content-center">
+                        <label for="gender_male" class="btn">
+                            <input id="gender_male" type="radio" name="gender" value="male"> 남
+                        </label>
+                        <label for="gender_female" class="btn">
+                            <input id="gender_female" type="radio" name="gender" value="female"> 여
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </section>
 
     <!-- Content section 2-->
@@ -57,23 +57,23 @@
                 <div class="p-5 my-5">
                     <h2 class="py-5 text-center" >2. 당신의 나이는 어떻게 되십니까?</h2>
                     <div class="container d-flex justify-content-center">
-                        <label class="btn">
-                            <input class="" type="radio" name="age" value="10"> 10대
+                        <label for="age_10" class="btn">
+                            <input id="age_10" type="radio" name="age" value="10"> 10대
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="age" value="20"> 20대
+                        <label for="age_20" class="btn">
+                            <input id="age_20" type="radio" name="age" value="20"> 20대
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="age" value="30"> 30대
+                        <label for="age_30" class="btn">
+                            <input id="age_30" type="radio" name="age" value="30"> 30대
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="age" value="40"> 40대
+                        <label for="age_40" class="btn">
+                            <input id="age_40" type="radio" name="age" value="40"> 40대
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="age" value="50"> 50대
+                        <label for="age_50" class="btn">
+                            <input id="age_50" type="radio" name="age" value="50"> 50대
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="age" value="60"> 60이상
+                        <label for="age_60" class="btn">
+                            <input id="age_60" type="radio" name="age" value="60"> 60대이상
                         </label>
                     </div>
                 </div>
@@ -88,14 +88,14 @@
                 <div class="p-5 my-5">
                     <h2 class="py-5 text-center" >3. 어떤 강도의 요가를 원하십니까?</h2>
                     <div class="container d-flex justify-content-center">
-                        <label class="btn">
-                            <input class="" type="radio" name="difficulty" value="easy"> 쉽게
+                        <label for="diff_easy" class="btn">
+                            <input id="diff_easy" type="radio" name="difficulty" value="easy"> 쉽게
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="difficulty" value="nomal"> 적당하게
+                        <label for="diff_normal" class="btn">
+                            <input id="diff_normal" type="radio" name="difficulty" value="normal"> 적당하게
                         </label>
-                        <label class="btn">
-                            <input class="" type="radio" name="difficulty" value="hard"> 어렵게
+                        <label for="diff_hard" class="btn">
+                            <input id="diff_hard" type="radio" name="difficulty" value="hard"> 어렵게
                         </label>
                     </div>
                 </div>
@@ -110,17 +110,17 @@
                 <div class="p-5 my-5">
                     <h2 class="py-5 text-center" >4. 요가의 목적은 어떻게 되십니까?</h2>
                     <div class="container d-flex justify-content-center">
-                        <label class="btn">
-                            <input class="" type="radio" name="purpose" value="diet"> 다이어트
+                        <label for="purpose_diet" class="btn">
+                            <input id="purpose_diet" type="radio" name="purpose" value="diet"> 다이어트
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="purpose" value="bodyfix"> 체형교정
+                        <label for="purpose_bodyfix" class="btn">
+                            <input id="purpose_bodyfix" type="radio" name="purpose" value="bodyfix"> 체형교정
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="purpose" value="relax"> 심신안정
+                        <label for="purpose_relax" class="btn">
+                            <input id="purpose_relax" type="radio" name="purpose" value="relax"> 심신안정
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="purpose" value="care"> 재활치료
+                        <label for="purpose_care" class="btn">
+                            <input id="purpose_care" type="radio" name="purpose" value="care"> 재활치료
                         </label>
                     </div>
                 </div>
@@ -135,20 +135,20 @@
                 <div class="p-5 my-5">
                     <h2 class="py-5 text-center" >5. 집중적으로 관리하고 싶은 부위는 어디십니까?</h2>
                     <div class="container d-flex justify-content-center">
-                        <label class="btn">
-                            <input class="" type="radio" name="body" value="neck"> 목, 어깨
+                        <label for="body_neck" class="btn">
+                            <input id="body_neck" type="radio" name="body" value="neck"> 목, 어깨
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="body" value="chest"> 등, 가슴
+                        <label for="body_chest" class="btn">
+                            <input id="body_chest" type="radio" name="body" value="chest"> 등, 가슴
                         </label>
-                        <label class="btn">
-                            <input class="" type="radio" name="body" value="waist"> 배, 허리
+                        <label for="body_waist" class="btn">
+                            <input id="body_waist" class="" type="radio" name="body" value="waist"> 배, 허리
                         </label>
-                        <label class="btn">
-                            <input class="" type="radio" name="body" value="arm"> 팔
+                        <label for="body_arm" class="btn">
+                            <input id="body_arm" type="radio" name="body" value="arm"> 팔
                         </label>
-                        <label class="btn">
-                            <input class="" type="radio" name="body" value="leg"> 다리
+                        <label for="body_leg" class="btn">
+                            <input id="body_leg" type="radio" name="body" value="leg"> 다리
                         </label>
                     </div>
                 </div>
@@ -163,17 +163,17 @@
                 <div class="p-5 my-5">
                     <h2 class="py-5 text-center" >6. 하루에 얼마나 요가를 하시겠습니까?</h2>
                     <div class="container d-flex justify-content-center">
-                        <label class="btn">
-                            <input class="" type="radio" name="time" value="10"> 10분 이내
+                        <label for="time_10" class="btn">
+                            <input id="time_10" type="radio" name="time" value="10"> 10분 이내
                         </label>
-                        <label class="btn">
-                            <input type="radio" name="time" value="20"> 10-30분
+                        <label for="time_20" class="btn">
+                            <input id="time_20" type="radio" name="time" value="20"> 10-30분
                         </label>
-                        <label class="btn">
-                            <input class="" type="radio" name="time" value="30"> 30-60분
+                        <label for="time_30" class="btn">
+                            <input id="time_30" type="radio" name="time" value="30"> 30-60분
                         </label>
-                        <label class="btn">
-                            <input class="" type="radio" name="time" value="60"> 60분 이상
+                        <label for="time_60" class="btn">
+                            <input id="time_60" type="radio" name="time" value="60"> 60분 이상
                         </label>
                     </div>
                 </div>
@@ -184,7 +184,7 @@
     <div class="container d-flex justify-content-center mb-5">
         <button type="submit" class="btn btn-primary btn-xl rounded-pill m-5">추천 요가 확인하기</button>
     </div>
-
+</form>
 </div>
 
 
