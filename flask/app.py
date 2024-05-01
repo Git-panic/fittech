@@ -1,7 +1,5 @@
 from flask import Flask, request, redirect, send_file, url_for, render_template, session, flash, Response
 import pandas as pd
-import pymysql
-
 
 #from werkzeug.security import generate_password_hash, check_password_hash
 from flask_socketio import SocketIO,emit
@@ -16,7 +14,8 @@ from flask import jsonify
 #from views.main_views import bp 
 from views.login_views import log
 from views.calendar_views import cal
-from db_config import db  # db_config 모듈에서 db 불러오기
+from views.survey_views import sur
+from db_config import supabase  # db_config 모듈에서 db 불러오기
 
 
 from tensorflow.keras.models import load_model
@@ -37,6 +36,7 @@ app.secret_key = 'your_secret_key_here'
 #app.register_blueprint(bp, url_prefix='/')
 app.register_blueprint(log,url_prefix='/')
 app.register_blueprint(cal,url_prefix='/')
+app.register_blueprint(sur,url_prefix='/')
 
 
 # 홈 페이지
@@ -44,10 +44,7 @@ app.register_blueprint(cal,url_prefix='/')
 def home():
     return render_template('home.html')
 
-# 요가 설문 페이지
-@app.route('/survey')
-def survey():
-    return render_template('survey.html')
+
 
 # 연락처 페이지
 @app.route('/contact')
@@ -712,7 +709,7 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    socketio.run(app, Debug =True)
+    socketio.run(app, debug =True)
 
 
 

@@ -1,19 +1,13 @@
-# db_config.py
-import pymysql
+from supabase import create_client
 
-try:
-    # MySQL 연결 설정
-    db = pymysql.connect(
-        host='database-1.cxoyk4wccpaa.eu-north-1.rds.amazonaws.com',
-        port=3306,
-        user='admin',
-        passwd='1234!1234',
-        db='users',
-        charset='utf8'
-    )
-    
-    # DB 연결이 성공적으로 이루어졌을 때 메시지 출력
-    print("DB 연결이 성공적으로 이루어졌습니다.")
-except pymysql.Error as e:
-    # DB 연결 실패한 경우 예외 처리
-    print(f"DB 연결 실패: {e}")
+# Supabase URL과 Key 설정
+supabase_url = "https://vldulsthmnzknlinmbqr.supabase.co"
+supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZsZHVsc3RobW56a25saW5tYnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIyODY5NjUsImV4cCI6MjAyNzg2Mjk2NX0.Q5CQQrgoPWAUYHTycfQ40duZN5WW70LTJ_2lSM8UytM"
+
+# Supabase 클라이언트 생성
+supabase = create_client(supabase_url, supabase_key)
+
+# Supabase 잘 연결 되었는지 코드
+
+#response = supabase.from_("users").select("*").execute()
+#print(response)

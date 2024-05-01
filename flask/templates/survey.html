@@ -54,157 +54,160 @@
         <div class="box py-3 pb-5 mb-5">
             <h2 class="mt-5 pt-3 gothic-a1-regular fw-bold">요가를 통해 몸과 마음을 조화롭게 만들어보세요!</h2>
             <h5 class="mb-5 pb-3 pt-1 text-decoration-underline text-secondary">여러분의 요가 스타일을 알아보기 위해 몇 가지 질문을 드릴게요.</h5>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center p-1 gothic-a1-regular" >1. 성별을 선택해주세요.</h4>
-                <div class="container mt-4">
-                    <label for="gender_male" class="btn">
-                        <input id="gender_male" type="radio" name="gender" value="male"><span class="fs-5"> 남자</span>
-                    </label>
-                    <label for="gender_female" class="btn">
-                        <input id="gender_female" type="radio" name="gender" value="female"><span class="fs-5"> 여자</span>
-                    </label>
+            
+            <form method="POST" action="/survey_answer" class="needs-validation" novalidate="" autocomplete="off">
+                <div class="my-5 py-3">
+                    <h4 class="text-center p-1 gothic-a1-regular" >1. 성별을 선택해주세요.</h4>
+                    <div class="container mt-4">
+                        <label for="gender_male" class="btn">
+                            <input id="gender_male" type="radio" name="gender" value="male"><span class="fs-5"> 남자</span>
+                        </label>
+                        <label for="gender_female" class="btn">
+                            <input id="gender_female" type="radio" name="gender" value="female"><span class="fs-5"> 여자</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center p-1 gothic-a1-regular" >2. 나이를 입력해주세요.</h4>
-                <div class="container mt-4">
-                    <input id="age" class="input-deco" type="number" name="age" ><span class="fs-5"> 세</span>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center p-1 gothic-a1-regular" >2. 나이를 입력해주세요.</h4>
+                    <div class="container mt-4">
+                        <input id="age" class="input-deco" type="number" name="age" ><span class="fs-5"> 세</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center p-1 gothic-a1-regular" >3. 키를 입력해주세요.</h4>
-                <div class="container mt-4">
-                    <input id="height" class="input-deco" type="number" name="height" ><span class="fs-5"> cm</span>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center p-1 gothic-a1-regular" >3. 키를 입력해주세요.</h4>
+                    <div class="container mt-4">
+                        <input id="height" class="input-deco" type="number" name="height" ><span class="fs-5"> cm</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center p-1 gothic-a1-regular" >4. 몸무게를 입력해주세요.</h4>
-                <div class="container mt-4">
-                    <input id="weight" class="input-deco" type="number" name="weight" ><span class="fs-5"> kg</span>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center p-1 gothic-a1-regular" >4. 몸무게를 입력해주세요.</h4>
+                    <div class="container mt-4">
+                        <input id="weight" class="input-deco" type="number" name="weight" ><span class="fs-5"> kg</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center gothic-a1-regular" >5. 운동한 기간을 선택해주세요.</h4>
-                <div class="container mt-4">
-                    <label for="period_0" class="btn">
-                        <input id="period_0" type="radio" name="period" value="0"> <span class="fs-5"> 3개월 미만</span>
-                    </label>
-                    <label for="period_1" class="btn">
-                        <input id="period_1" type="radio" name="period" value="1"> <span class="fs-5"> 3개월 ~ 6개월</span>
-                    </label>
-                    <label for="period_2" class="btn">
-                        <input id="period_2" type="radio" name="period" value="2"> <span class="fs-5"> 6개월 ~ 1년</span>
-                    </label>
-                    <label for="period_3" class="btn">
-                        <input id="period_3" type="radio" name="period" value="3"> <span class="fs-5"> 1년 이상</span>
-                    </label>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center gothic-a1-regular" >5. 운동한 기간을 선택해주세요.</h4>
+                    <div class="container mt-4">
+                        <label for="period_0" class="btn">
+                            <input id="period_0" type="radio" name="period" value="0"> <span class="fs-5"> 3개월 미만</span>
+                        </label>
+                        <label for="period_1" class="btn">
+                            <input id="period_1" type="radio" name="period" value="1"> <span class="fs-5"> 3개월 ~ 6개월</span>
+                        </label>
+                        <label for="period_2" class="btn">
+                            <input id="period_2" type="radio" name="period" value="2"> <span class="fs-5"> 6개월 ~ 1년</span>
+                        </label>
+                        <label for="period_3" class="btn">
+                            <input id="period_3" type="radio" name="period" value="3"> <span class="fs-5"> 1년 이상</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center p-1 gothic-a1-regular" >6. 집중적으로 관리하고 싶은 부위를 선택해주세요. (복수선택 가능)</h4>
-                <div class="container mt-4" style="width: 90%;">
-                    <label for="body_all" class="btn">
-                        <input id="body_all" type="checkbox" name="body" value="all"> <span class="fs-5"> 전신</span>
-                    </label>
-                    <label for="body_core" class="btn">
-                        <input id="body_core" type="checkbox" name="body" value="core"> <span class="fs-5"> 코어</span>
-                    </label>
-                    <label for="body_stomach" class="btn">
-                        <input id="body_stomach" type="checkbox" name="body" value="stomach"> <span class="fs-5"> 복부</span>
-                    </label>
-                    <label for="body_thigh" class="btn">
-                        <input id="body_thigh" type="checkbox" name="body" value="thigh"> <span class="fs-5"> 허벅지</span>
-                    </label>
-                    <label for="body_pelvis" class="btn">
-                        <input id="body_pelvis" type="checkbox" name="body" value="pelvis"> <span class="fs-5"> 골반</span>
-                    </label>
-                    <label for="body_leg" class="btn">
-                        <input id="body_leg" type="checkbox" name="body" value="leg"> <span class="fs-5"> 다리</span>
-                    </label>
-                    <label for="body_hip" class="btn">
-                        <input id="body_hip" type="checkbox" name="body" value="hip"> <span class="fs-5"> 엉덩이</span>
-                    </label>
-                    <label for="body_back" class="btn">
-                        <input id="body_back" type="checkbox" name="body" value="back"> <span class="fs-5"> 등</span>
-                    </label>
-                    <label for="body_waist" class="btn">
-                        <input id="body_waist" type="checkbox" name="body" value="waist"> <span class="fs-5"> 허리</span>
-                    </label>
-                    <label for="body_chest" class="btn">
-                        <input id="body_chest" type="checkbox" name="body" value="chest"> <span class="fs-5"> 가슴</span>
-                    </label>
-                    <label for="body_neck" class="btn">
-                        <input id="body_neck" type="checkbox" name="body" value="neck"> <span class="fs-5"> 목</span>
-                    </label>
-                    <label for="body_shoulder" class="btn">
-                        <input id="body_shoulder" type="checkbox" name="body" value="shoulder"> <span class="fs-5"> 어깨</span>
-                    </label>
-                    <label for="body_arm" class="btn">
-                        <input id="body_arm" type="checkbox" name="body" value="arm"> <span class="fs-5"> 팔</span>
-                    </label>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center p-1 gothic-a1-regular" >6. 집중적으로 관리하고 싶은 부위를 선택해주세요. (복수선택 가능)</h4>
+                    <div class="container mt-4" style="width: 90%;">
+                        <label for="body_all" class="btn">
+                            <input id="body_all" type="checkbox" name="body" value="all"> <span class="fs-5"> 전신</span>
+                        </label>
+                        <label for="body_core" class="btn">
+                            <input id="body_core" type="checkbox" name="body" value="core"> <span class="fs-5"> 코어</span>
+                        </label>
+                        <label for="body_stomach" class="btn">
+                            <input id="body_stomach" type="checkbox" name="body" value="stomach"> <span class="fs-5"> 복부</span>
+                        </label>
+                        <label for="body_thigh" class="btn">
+                            <input id="body_thigh" type="checkbox" name="body" value="thigh"> <span class="fs-5"> 허벅지</span>
+                        </label>
+                        <label for="body_pelvis" class="btn">
+                            <input id="body_pelvis" type="checkbox" name="body" value="pelvis"> <span class="fs-5"> 골반</span>
+                        </label>
+                        <label for="body_leg" class="btn">
+                            <input id="body_leg" type="checkbox" name="body" value="leg"> <span class="fs-5"> 다리</span>
+                        </label>
+                        <label for="body_hip" class="btn">
+                            <input id="body_hip" type="checkbox" name="body" value="hip"> <span class="fs-5"> 엉덩이</span>
+                        </label>
+                        <label for="body_back" class="btn">
+                            <input id="body_back" type="checkbox" name="body" value="back"> <span class="fs-5"> 등</span>
+                        </label>
+                        <label for="body_waist" class="btn">
+                            <input id="body_waist" type="checkbox" name="body" value="waist"> <span class="fs-5"> 허리</span>
+                        </label>
+                        <label for="body_chest" class="btn">
+                            <input id="body_chest" type="checkbox" name="body" value="chest"> <span class="fs-5"> 가슴</span>
+                        </label>
+                        <label for="body_neck" class="btn">
+                            <input id="body_neck" type="checkbox" name="body" value="neck"> <span class="fs-5"> 목</span>
+                        </label>
+                        <label for="body_shoulder" class="btn">
+                            <input id="body_shoulder" type="checkbox" name="body" value="shoulder"> <span class="fs-5"> 어깨</span>
+                        </label>
+                        <label for="body_arm" class="btn">
+                            <input id="body_arm" type="checkbox" name="body" value="arm"> <span class="fs-5"> 팔</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center gothic-a1-regular" >7. 요가 수업의 경험 여부를 알려주세요. (복수선택 가능)</h4>
-                <div class="container mt-4">
-                    <label for="experience_offline" class="btn">
-                        <input id="experience_offline" type="checkbox" name="experience" value="offline"> <span class="fs-5"> 오프라인 레슨 경험</span>
-                    </label>
-                    <label for="experience_online" class="btn">
-                        <input id="experience_online" type="checkbox" name="experience" value="online"> <span class="fs-5"> 온라인 레슨 경험</span>
-                    </label>
-                    <label for="experience_never" class="btn">
-                        <input id="experience_never" type="checkbox" name="experience" value="never"> <span class="fs-5"> 요가 수업 경험이 전혀 없음</span>
-                    </label>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center gothic-a1-regular" >7. 요가 수업의 경험 여부를 알려주세요. (복수선택 가능)</h4>
+                    <div class="container mt-4">
+                        <label for="experience_offline" class="btn">
+                            <input id="experience_offline" type="checkbox" name="experience" value="offline"> <span class="fs-5"> 오프라인 레슨 경험</span>
+                        </label>
+                        <label for="experience_online" class="btn">
+                            <input id="experience_online" type="checkbox" name="experience" value="online"> <span class="fs-5"> 온라인 레슨 경험</span>
+                        </label>
+                        <label for="experience_never" class="btn">
+                            <input id="experience_never" type="checkbox" name="experience" value="never"> <span class="fs-5"> 요가 수업 경험이 전혀 없음</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center gothic-a1-regular" >8. 일주일에 요가를 몇 번 실시하는지 선택해주세요.</h4>
-                <div class="container mt-4">
-                    <label for="week_0" class="btn">
-                        <input id="week_0" type="radio" name="week" value="0"> <span class="fs-5"> 일주일에 한 번 미만</span>
-                    </label>
-                    <label for="week_1" class="btn">
-                        <input id="week_1" type="radio" name="week" value="1"> <span class="fs-5"> 일주일에 1~2회</span>
-                    </label>
-                    <label for="week_2" class="btn">
-                        <input id="week_2" type="radio" name="week" value="2"> <span class="fs-5"> 일주일에 3~4회</span>
-                    </label>
-                    <label for="week_3" class="btn">
-                        <input id="week_3" type="radio" name="week" value="3"> <span class="fs-5"> 일주일에 5회 이상</span>
-                    </label>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center gothic-a1-regular" >8. 일주일에 요가를 몇 번 실시하는지 선택해주세요.</h4>
+                    <div class="container mt-4">
+                        <label for="week_0" class="btn">
+                            <input id="week_0" type="radio" name="week" value="0"> <span class="fs-5"> 일주일에 한 번 미만</span>
+                        </label>
+                        <label for="week_1" class="btn">
+                            <input id="week_1" type="radio" name="week" value="1"> <span class="fs-5"> 일주일에 1~2회</span>
+                        </label>
+                        <label for="week_2" class="btn">
+                            <input id="week_2" type="radio" name="week" value="2"> <span class="fs-5"> 일주일에 3~4회</span>
+                        </label>
+                        <label for="week_3" class="btn">
+                            <input id="week_3" type="radio" name="week" value="3"> <span class="fs-5"> 일주일에 5회 이상</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="my-5 py-3">
-                <h4 class="text-center gothic-a1-regular" >9. 요가를 하게 된 주된 이유를 선택해주세요. (복수선택 가능)</h4>
-                <div class="container mt-4">
-                    <label for="purpose_strength" class="btn">
-                        <input id="purpose_strength" type="checkbox" name="purpose" value="strength"> <span class="fs-5"> 근력 강화</span>
-                    </label>
-                    <label for="purpose_relax" class="btn">
-                        <input id="purpose_relax" type="checkbox" name="purpose" value="relax"> <span class="fs-5"> 스트레스 감소</span>
-                    </label>
-                    <label for="purpose_flex" class="btn">
-                        <input id="purpose_flex" type="checkbox" name="purpose" value="flex"> <span class="fs-5"> 유연성 향상</span>
-                    </label>
-                    <label for="purpose_diet" class="btn">
-                        <input id="purpose_diet" type="checkbox" name="purpose" value="diet"> <span class="fs-5"> 다이어트</span>
-                    </label>
+    
+                <div class="my-5 py-3">
+                    <h4 class="text-center gothic-a1-regular" >9. 요가를 하게 된 주된 이유를 선택해주세요. (복수선택 가능)</h4>
+                    <div class="container mt-4">
+                        <label for="purpose_strength" class="btn">
+                            <input id="purpose_strength" type="checkbox" name="purpose" value="strength"> <span class="fs-5"> 근력 강화</span>
+                        </label>
+                        <label for="purpose_relax" class="btn">
+                            <input id="purpose_relax" type="checkbox" name="purpose" value="relax"> <span class="fs-5"> 스트레스 감소</span>
+                        </label>
+                        <label for="purpose_flex" class="btn">
+                            <input id="purpose_flex" type="checkbox" name="purpose" value="flex"> <span class="fs-5"> 유연성 향상</span>
+                        </label>
+                        <label for="purpose_diet" class="btn">
+                            <input id="purpose_diet" type="checkbox" name="purpose" value="diet"> <span class="fs-5"> 다이어트</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="container d-flex justify-content-center mt-5">
-                <button type="submit" class="btn btn-dark btn-xl rounded-pill m-5 gothic-a1-regular fw-bold">추천 요가 확인하기</button>
-            </div>
+    
+                <div class="container d-flex justify-content-center mt-5">
+                    <button type="submit" class="btn btn-dark btn-xl rounded-pill m-5 gothic-a1-regular fw-bold">추천 요가 확인하기</button>
+                </div>
+            </form>
+            
         </div>
 
         

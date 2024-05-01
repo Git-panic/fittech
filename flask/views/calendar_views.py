@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
 
 cal = Blueprint('cal', __name__, template_folder="templates")
-from db_config import db  # db_config 모듈에서 db 불러오기
+from db_config import supabase  # db_config 모듈에서 db 불러오기
 
 from flask import jsonify
 import datetime
@@ -30,10 +30,10 @@ def add_cal():
     time = int(request.form.get('time'))
     memo = request.form.get('memo')
 
-    cursor = db.cursor()
+    cursor = supabase.cursor()
     query = "INSERT INTO calendar (user_id, date, time, memo) VALUES (%s, %s, %s, %s)"
     cursor.execute(query, (user_id, date, time, memo))
-    db.commit()
+    supabase.commit()
     cursor.close()
     return redirect(url_for('ctest'))
 
@@ -46,7 +46,7 @@ def get_event():
     selected_date = request.args.get('selected_date')
 
     # 날짜에 해당하는 데이터를 DB에서 검색합니다.
-    cursor = db.cursor()
+    cursor = supabase.cursor()
     query = "SELECT time, memo FROM calendar WHERE user_id = %s AND date = %s"
     cursor.execute(query, (user_id, selected_date,))
     data = cursor.fetchall()
@@ -67,51 +67,58 @@ def get_yearly_data():
     user_id = session.get('user_id')
     year = "2023"
 
-    cursor = db.cursor()
+    try:
+        # Supabase에서 데이터 가져오기
+        result = supabase.from_("calendar").select("*").execute()
 
-    # 감정 맵 초기화
-    emotion_map = {
-        'excited': '😆',
-        'happy': '😊',
-        'soso': '😐',
-        'angry': '😠',
-        'sad': '😢'
-    }
+        # 데이터가 없는 경우
+        if not result.data:
+            flash("데이터를 가져오는 중에 오류가 발생했습니다.", "error")
+            return redirect(url_for('home'))
 
-    # 연간 감정 데이터 집계
-    yearly_emotions = Counter()
-    emotion_query = "SELECT memo FROM calendar4 WHERE user_id = %s AND date LIKE %s"
-    cursor.execute(emotion_query, (user_id, f'{year}-%',))
-    memos = cursor.fetchall()
+        data = result.data
+        
+        # 감정 맵 초기화
+        emotion_map = {
+            'excited': '😆',
+            'happy': '😊',
+            'soso': '😐',
+            'angry': '😠',
+            'sad': '😢'
+        }
 
-    for memo in memos:
-        for word, emoji in emotion_map.items():
-            if word in memo[0]:
-                yearly_emotions[emoji] += 1
+        # 연간 감정 데이터 집계
+        yearly_emotions = Counter()
+        for entry in data:
+            memo = entry.get('memo')
+            for word, emoji in emotion_map.items():
+                if word in memo:
+                    yearly_emotions[emoji] += 1
 
-    # 월별 시간 데이터 집계
-    monthly_totals = {}
-    for month in range(1, 13):
-        month_str = f"{year}-{month:02d}"
-        time_query = "SELECT SUM(time) FROM calendar4 WHERE user_id = %s AND date LIKE %s"
-        cursor.execute(time_query, (user_id, f'{month_str}-%',))
-        total_minutes = cursor.fetchone()[0] or 0
-        monthly_totals[month_str] = total_minutes
-    
-    total_yearly_minutes = sum(monthly_totals.values())
-    cursor.close()
+        # 월별 시간 데이터 집계
+        monthly_totals = {}
+        for month in range(1, 13):
+            month_str = f"{year}-{month:02d}"
+            total_minutes = sum(entry.get('time', 0) for entry in data if entry.get('date', '').startswith(month_str))
+            monthly_totals[month_str] = total_minutes
 
-    # Replace None values with 0 in yearly_emotions
-    for emoji in emotion_map.values():
-        if emoji not in yearly_emotions:
-            yearly_emotions[emoji] = 0
+        total_yearly_minutes = sum(monthly_totals.values())
 
-    # 두 데이터 집합을 하나의 JSON으로 반환
-    return jsonify({
-        "monthly_totals": monthly_totals, 
-        "yearly_emotions": dict(yearly_emotions),
-        "total_yearly_minutes": total_yearly_minutes
-    })
+        # Replace None values with 0 in yearly_emotions
+        for emoji in emotion_map.values():
+            if emoji not in yearly_emotions:
+                yearly_emotions[emoji] = 0
+
+        # 두 데이터 집합을 하나의 JSON으로 반환
+        return jsonify({
+            "monthly_totals": monthly_totals, 
+            "yearly_emotions": dict(yearly_emotions),
+            "total_yearly_minutes": total_yearly_minutes
+        })
+    except Exception as e:
+        flash("데이터를 가져오는 중에 오류가 발생했습니다.", "error")
+        return redirect(url_for('home'))
+
 
 # @cal.route('/get_month_data', methods=['GET'])
 # def get_month_data():
@@ -155,10 +162,10 @@ def add_memo():
         date_obj = datetime.datetime.now().strftime('%Y-%m-%d')
 
         # 데이터베이스에 쿼리 실행
-        cursor = db.cursor()
+        cursor = supabase.cursor()
         query = "UPDATE calendar4 SET memo = %s WHERE user_id = %s AND date = %s"
         cursor.execute(query, (memo, user_id, date_obj))
-        db.commit()
+        supabase.commit()
         cursor.close()
         #cursor.execute("SELECT * FROM users2 WHERE user_id = %s", (user_id,))
         return jsonify({'status': 'success'})
@@ -177,7 +184,7 @@ def after():
     user_id = session.get('user_id')
     print(user_id)
     if user_id:
-        cursor = db.cursor()
+        cursor = supabase.cursor()
         current_date = datetime.datetime.now().strftime('%Y-%m-%d')
 
         query = """
@@ -186,7 +193,7 @@ def after():
         ON DUPLICATE KEY UPDATE time = %s
         """
         cursor.execute(query, (user_id, current_date, time_difference, time_difference))
-        db.commit()
+        supabase.commit()
          # 쿼리 실행 결과 로깅
         if cursor.rowcount > 0:
             print(f"Success: {cursor.rowcount} row(s) affected.")
@@ -206,7 +213,7 @@ def send_selected_value():
     try:
         user_id = session.get('user_id')
         if user_id:
-            cursor = db.cursor()
+            cursor = supabase.cursor()
             current_date = datetime.datetime.now().strftime('%Y-%m-%d')
             selected_value = request.form.get('selectedValue')  # 선택한 값을 가져옴
 
@@ -216,7 +223,7 @@ def send_selected_value():
             ON DUPLICATE KEY UPDATE state = %s
             """
             cursor.execute(query, (user_id, current_date, selected_value, selected_value))
-            db.commit()
+            supabase.commit()
 
             cursor.close()
 
@@ -235,7 +242,7 @@ def get_audio_state():
             current_date = datetime.datetime.now().strftime('%Y-%m-%d')  # 현재 날짜 가져오기
 
             # 데이터베이스에서 user_id와 date에 해당하는 state 값을 가져옴
-            cursor = db.cursor()
+            cursor = supabase.cursor()
             query = "SELECT state FROM button2 WHERE user_id = %s AND date = %s"
             cursor.execute(query, (user_id, current_date))
             result = cursor.fetchone()

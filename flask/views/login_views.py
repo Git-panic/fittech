@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from db_config import supabase
 
 log = Blueprint('log', __name__, template_folder="templates")
-from db_config import db  # db_config 모듈에서 db 불러오기
-
 
 # 로그인 페이지
 @log.route('/login', methods=['GET', 'POST'])
@@ -11,17 +10,15 @@ def login():
         user_id = request.form['user_id']
         user_password = request.form['user_password']
 
-        cursor = db.cursor()
-        cursor.execute("SELECT user_name, user_password FROM users2 WHERE user_id = %s", (user_id,))
-        user_record = cursor.fetchone()
-        cursor.close()
+        # Supabase에서 사용자 정보 가져오기
+        response = supabase.from_("users").select("user_id, user_password").eq("user_id", user_id).execute()
+        user_record = response.data
 
         if user_record:
-            stored_password = user_record[1]
+            stored_password = user_record[0]['user_password']
             if user_password == stored_password:
                 # 비밀번호가 일치하는 경우
                 session['user_id'] = user_id
-                session['user_name'] = user_record[0]  # user_name을 세션에 저장
                 return redirect(url_for('home'))
 
         # 비밀번호가 일치하지 않는 경우
@@ -35,24 +32,20 @@ def login():
 def register():
     if request.method == 'POST':
         # 폼 데이터에서 정보 검색
-        user_name = request.form['user_name']
+        user_name = request.form['name']
         user_id = request.form['user_id']
         user_password = request.form['user_password']
 
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM users2 WHERE user_id = %s", (user_id,))
-        if cursor.fetchone():
+        # Supabase에서 사용자 중복 확인
+        response = supabase.from_("users").select("*").eq("user_id", user_id).execute()
+        if response.data:
             flash("ID가 이미 존재합니다. 다른 ID를 선택해주세요.", 'error')
             return redirect(url_for('log.login'))
 
-        cursor.execute("INSERT INTO users2 (user_name, user_id, user_password) VALUES (%s, %s, %s)",
-                       (user_name, user_id, user_password))
-        db.commit()
-        cursor.close()
+        # Supabase에 사용자 추가
+        supabase.from_("users").insert({"name": user_name, "user_id": user_id, "user_password": user_password}).execute()
 
         session['user_id'] = user_id
-        session['user_name'] = user_name
-
         return redirect(url_for('home'))
 
     return render_template('register.html')
@@ -61,5 +54,7 @@ def register():
 @log.route('/logout')
 def logout():
     session.pop('user_id', None)
-    session.pop('user_name', None)
+    session.pop('_flashes', None)
+    keys = session.keys()
+    print(keys)
     return redirect(url_for('home'))
