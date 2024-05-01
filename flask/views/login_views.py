@@ -32,7 +32,7 @@ def login():
 def register():
     if request.method == 'POST':
         # 폼 데이터에서 정보 검색
-        user_name = request.form['name']
+        user_name = request.form['user_name']
         user_id = request.form['user_id']
         user_password = request.form['user_password']
 
@@ -43,7 +43,7 @@ def register():
             return redirect(url_for('log.login'))
 
         # Supabase에 사용자 추가
-        supabase.from_("users").insert({"name": user_name, "user_id": user_id, "user_password": user_password}).execute()
+        supabase.from_("users").insert({"user_name": user_name, "user_id": user_id, "user_password": user_password}).execute()
 
         session['user_id'] = user_id
         return redirect(url_for('home'))
