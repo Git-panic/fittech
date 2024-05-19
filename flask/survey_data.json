@@ -1,0 +1,30 @@
+[
+    {
+        "id": 16,
+        "answerby": 1,
+        "gender": "female",
+        "age": 1,
+        "height": 1,
+        "weight": 1,
+        "period": "1",
+        "body_parts": "[\"core\", \"pelvis\"]",
+        "experience": "[\"online\"]",
+        "week": "1",
+        "purpose": "[\"relax\"]",
+        "created_at": "2024-05-01T05:27:21.843149+00:00"
+    },
+    {
+        "id": 17,
+        "answerby": 3,
+        "gender": "female",
+        "age": 2,
+        "height": 2,
+        "weight": 2,
+        "period": "1",
+        "body_parts": "[\"stomach\", \"pelvis\", \"neck\"]",
+        "experience": "[\"online\"]",
+        "week": "2",
+        "purpose": "[\"relax\"]",
+        "created_at": "2024-05-01T06:25:21.540952+00:00"
+    }
+]

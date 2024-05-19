@@ -54,7 +54,4 @@ def register():
 @log.route('/logout')
 def logout():
     session.pop('user_id', None)
-    session.pop('_flashes', None)
-    keys = session.keys()
-    print(keys)
     return redirect(url_for('home'))
