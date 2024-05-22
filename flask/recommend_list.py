@@ -61,12 +61,13 @@ def create_user_profile(user_data):
     difficulty_score = (difficulty_score - min(scores)) / (max(scores) - min(scores)) * 3
 
     # 목적 벡터 생성
-    purpose_vector = np.zeros(3)
+    purpose_vector = np.zeros(4)
     purposes = json.loads(user_data['purpose'])
     purpose_indices = {
         'strength': 0,       # 근력강화
-        'flexibility': 1,    # 유연성 향상
-        'stretching': 2      # 스트레칭
+        'balance' : 1,       # 균형감각 향상
+        'flexibility': 2,    # 유연성 향상
+        'stretching': 3      # 긴장완화
     }
     for purpose in purposes:
         if purpose in purpose_indices:
@@ -85,7 +86,7 @@ def create_user_vector_indices():
         'neck', 'shoulder', 'arm'
     ]
     indices += body_part_indices
-    indices += ['purpose_strength', 'purpose_flexibility', 'purpose_stretching']
+    indices += ['purpose_strength', 'purpose_balance', 'purpose_flexibility', 'purpose_stretching']
     return indices
 
 # 모든 사용자 벡터 생성 및 출력
