@@ -16,6 +16,7 @@ from views.login_views import log
 from views.calendar_views import cal
 from views.survey_views import sur
 from db_config import supabase  # db_config 모듈에서 db 불러오기
+from recommend import recommend_yoga_poses  # 요가 추천 모듈 불러오기
 
 
 from tensorflow.keras.models import load_model
@@ -44,6 +45,10 @@ app.register_blueprint(sur,url_prefix='/')
 def home():
     return render_template('home.html')
 
+# 홈 페이지
+@app.route('/recommend')
+def recommend():
+    return render_template('showRecommend.html')
 
 
 # 연락처 페이지

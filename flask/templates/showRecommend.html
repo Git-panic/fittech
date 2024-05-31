@@ -1,0 +1,94 @@
+{% extends 'base.html' %} {% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap"
+  rel="stylesheet"
+/>
+<link href="./static/css/styles3.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %} {% block content %}
+<header
+  class="masthead"
+  style="background-image: url('./static/img/yoga.jpg'); background-size: cover"
+></header>
+<style>
+  @font-face {
+    font-family: "SUITE-Regular";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2")
+      format("woff2");
+    font-weight: 400;
+    font-style: normal;
+  }
+  .gothic-a1-regular,
+  * {
+    font-family: "Gothic A1", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .display-4,
+  .p-5 {
+    font-family: "SUITE-Regular", Arial, sans-serif;
+  }
+
+  .box {
+    font-family: "SUITE-Regular", Arial, sans-serif;
+    float: left;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background-color: #ffffff;
+    height: 450px;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .second {
+    margin-top: 100px;
+    max-width: 250px;
+    height: 350px
+  }
+  .main {
+    max-width: 300px;
+  }
+  .discribe {
+    font-size: small;
+  }
+</style>
+
+<div class="d-flex text-center">
+  <div class="container">
+    <h3>____님에게 가장 어울리는 동작이에요.</h3>
+    <div class="row my-5 justify-content-center">
+      <div class="col box mx-5 second ">
+        <img class="mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj_5WgPugdkjHEqzUTFMbX_Ax9jPqPd165SVBOkuDHlA&s" alt="" width="70%" />
+        <div class="my-3">전사 자세</div>
+        <div class="discribe">전사자세는 하체근력을 발달시키고, 엉덩이와 허리라인을 슬림하게 만들어주는 자세입니다. 또한 집중력과 균형감각의 향상에도 도움을 주는 동작이에요.</div>
+      </div>
+      <div class="col box mx-5 main">
+        <img class="mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj_5WgPugdkjHEqzUTFMbX_Ax9jPqPd165SVBOkuDHlA&s" alt="" width="70%" />
+        <div class="my-3">전사 자세</div>
+        <div class="pb-3 discribe">효과 : 코어 근육 강화, 균형 강화, 집중력 향상</div>
+        <div class="discribe">전사자세는 하체근력을 발달시키고, 엉덩이와 허리라인을 슬림하게 만들어주는 자세입니다. 또한 집중력과 균형감각의 향상에도 도움을 주는 동작이에요.</div>
+      </div>
+      <div class="col box mx-5 second">
+        <img class="mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj_5WgPugdkjHEqzUTFMbX_Ax9jPqPd165SVBOkuDHlA&s" alt="" width="70%" />
+        <div class="my-3">전사 자세</div>
+        <div class="discribe">전사자세는 하체근력을 발달시키고, 엉덩이와 허리라인을 슬림하게 만들어주는 자세입니다. 또한 집중력과 균형감각의 향상에도 도움을 주는 동작이에요.</div>
+      </div>
+    </div>
+    <div class="container d-flex justify-content-center mt-5">
+      <button type="submit" class="btn btn-dark btn-xl mt-3 mb-5 rounded-pill gothic-a1-regular fw-bold">추천 요가 하러가기</button>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %} {% block footer %}
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Fitech 2023</p>
+  </div>
+</footer>
+{% endblock %}

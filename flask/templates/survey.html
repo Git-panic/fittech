@@ -46,16 +46,16 @@
         border-width: 0 0 1px;
       }
 </style>
-
+<script src="../static/js/survey.js"></script>
 <div class="">
 
-    <div class="container text-center  d-flex justify-content-center">
+    <div class="container text-center d-flex justify-content-center">
 
         <div class="box py-3 pb-5 mb-5">
             <h2 class="mt-5 pt-3 gothic-a1-regular fw-bold">요가를 통해 몸과 마음을 조화롭게 만들어보세요!</h2>
             <h5 class="mb-5 pb-3 pt-1 text-decoration-underline text-secondary">여러분의 요가 스타일을 알아보기 위해 몇 가지 질문을 드릴게요.</h5>
             
-            <form method="POST" action="/survey_answer" class="needs-validation" novalidate="" autocomplete="off">
+            <form method="POST" class="needs-validation" novalidate="" autocomplete="off">
                 <div class="my-5 py-3">
                     <h4 class="text-center p-1 gothic-a1-regular" >1. 성별을 선택해주세요.</h4>
                     <div class="container mt-4">
@@ -197,9 +197,6 @@
                         <label for="purpose_flex" class="btn">
                             <input id="purpose_flex" type="checkbox" name="purpose" value="flex"> <span class="fs-5"> 유연성 향상</span>
                         </label>
-                        <label for="purpose_diet" class="btn">
-                            <input id="purpose_diet" type="checkbox" name="purpose" value="diet"> <span class="fs-5"> 다이어트</span>
-                        </label>
                     </div>
                 </div>
     
@@ -207,18 +204,13 @@
                     <button type="submit" class="btn btn-dark btn-xl rounded-pill m-5 gothic-a1-regular fw-bold">추천 요가 확인하기</button>
                 </div>
             </form>
-            
         </div>
 
         
     </div>
 
 
-    
-
-
 </div>
-
 
 {% endblock %}
 
