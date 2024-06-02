@@ -1,3 +1,5 @@
+# yoga_recommend.py
+
 import pandas as pd
 import numpy as np
 import json
@@ -9,9 +11,6 @@ yoga_df = pd.read_excel("yoga_data.xlsx", engine='openpyxl')
 # 엑셀 파일의 첫 번째 열이 요가 동작의 이름이고, 나머지 열은 벡터 데이터입니다.
 # 예시 벡터 데이터가 숫자로 구성되어 있다고 가정하고, 해당 열을 NumPy 배열로 변환합니다.
 yoga_database = {row[0]: np.array(row[1:]) for row in yoga_df.values}
-
-# 데이터베이스 벡터의 차원을 확인합니다.
-vector_length = len(next(iter(yoga_database.values())))
 
 # JSON 파일 읽기
 with open('survey_data.json', 'r', encoding='utf-8') as f:
@@ -74,10 +73,6 @@ def create_user_profile(user_data):
 
     user_vector = np.concatenate(([difficulty_score], body_parts_vector, purpose_vector))
     
-    # 부족한 차원을 0으로 채워 맞춥니다.
-    #if len(user_vector) < vector_length:
-    #    user_vector = np.pad(user_vector, (0, vector_length - len(user_vector)), 'constant')
-    
     return user_vector
 
 # 사용자 벡터 인덱스 이름 생성 함수
@@ -92,18 +87,14 @@ def create_user_vector_indices():
     indices += ['purpose_strength', 'purpose_flexibility', 'purpose_stretching']
     return indices
 
-# 모든 사용자 벡터 생성 및 출력
+# 사용자 추천 요가 동작 함수
 def recommend_yoga_poses():
     recommendations = []
-    vector_indices = create_user_vector_indices()
+
+    # 모든 사용자 벡터 생성 및 출력
     for user_data in user_profiles:
         user_profile = create_user_profile(user_data)
-
-        # (확인용)사용자 벡터와 인덱스 이름 함께 출력
-        print(f"사용자 벡터 (id: {user_data['id']}):")
-        #for idx, val in zip(vector_indices, user_profile):
-        #    print(f"{idx}: {val}")
-
+        
         # 코사인 유사도 계산
         similarities = {}
         for pose, vector in yoga_database.items():
@@ -115,12 +106,7 @@ def recommend_yoga_poses():
 
         # 상위 N개의 요가 추천
         N = 3
-        recommended_poses = sorted_poses[:N]
-
-        print("추천된 요가 동작:")
-        for pose, similarity in recommended_poses:
-            print(f"{pose}: 유사도 {similarity}")
-        print()  # 사용자 간 구분을 위한 공백
+        recommended_poses = [pose for pose, similarity in sorted_poses[:N]]
 
         recommendations.append({
             'user_id': user_data['id'],

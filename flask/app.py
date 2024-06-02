@@ -48,7 +48,8 @@ def home():
 # 홈 페이지
 @app.route('/recommend')
 def recommend():
-    return render_template('showRecommend.html')
+    recommendations = recommend_yoga_poses()
+    return render_template('showRecommend.html', recommendations=recommendations)
 
 
 # 연락처 페이지

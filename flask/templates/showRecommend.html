@@ -1,11 +1,12 @@
 {% extends 'base.html' %} {% block head %}
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap"
-  rel="stylesheet"
-/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 <link href="./static/css/styles3.css" rel="stylesheet" />
+<head>
+    <meta charset="UTF-8">
+    <title>Yoga Recommendations</title>
+</head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %} {% block content %}
 <header
@@ -38,11 +39,17 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     background-color: #ffffff;
-    height: 450px;
-
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative; /* Added for positioning the icon */
+  }
+  .left-right-box {
+    height: 400px; /* Reduced height for left and right boxes */
+    margin-top: 50px; /* Adjust margin-top to align the bottom */
+  }
+  .center-box {
+    height: 450px; /* Original height for center box */
   }
   .second {
     margin-top: 100px;
@@ -55,34 +62,51 @@
   .discribe {
     font-size: small;
   }
+  .img {
+    width: 200px;
+    height: 200px;
+    background-color: beige;
+  }
+  .icon {
+    position: absolute;
+    top: -30px; /* Adjust as needed */
+    left: -60px; /* Adjust as needed */
+    width: 120px; /* Adjust as needed */
+    height: 120px; /* Adjust as needed */
+  }
 </style>
+
 
 <div class="d-flex text-center">
   <div class="container">
-    <h3>____님에게 가장 어울리는 동작이에요.</h3>
-    <div class="row my-5 justify-content-center">
-      <div class="col box mx-5 second ">
-        <img class="mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj_5WgPugdkjHEqzUTFMbX_Ax9jPqPd165SVBOkuDHlA&s" alt="" width="70%" />
-        <div class="my-3">전사 자세</div>
-        <div class="discribe">전사자세는 하체근력을 발달시키고, 엉덩이와 허리라인을 슬림하게 만들어주는 자세입니다. 또한 집중력과 균형감각의 향상에도 도움을 주는 동작이에요.</div>
-      </div>
-      <div class="col box mx-5 main">
-        <img class="mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj_5WgPugdkjHEqzUTFMbX_Ax9jPqPd165SVBOkuDHlA&s" alt="" width="70%" />
-        <div class="my-3">전사 자세</div>
-        <div class="pb-3 discribe">효과 : 코어 근육 강화, 균형 강화, 집중력 향상</div>
-        <div class="discribe">전사자세는 하체근력을 발달시키고, 엉덩이와 허리라인을 슬림하게 만들어주는 자세입니다. 또한 집중력과 균형감각의 향상에도 도움을 주는 동작이에요.</div>
-      </div>
-      <div class="col box mx-5 second">
-        <img class="mt-5" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj_5WgPugdkjHEqzUTFMbX_Ax9jPqPd165SVBOkuDHlA&s" alt="" width="70%" />
-        <div class="my-3">전사 자세</div>
-        <div class="discribe">전사자세는 하체근력을 발달시키고, 엉덩이와 허리라인을 슬림하게 만들어주는 자세입니다. 또한 집중력과 균형감각의 향상에도 도움을 주는 동작이에요.</div>
-      </div>
+    {% for recommendation in recommendations %}
+      {% if recommendation.user_id == 16 %}
+        <h3>{{ recommendation.user_id }}님에게 가장 어울리는 동작이에요.</h3>
+        <div class="row my-5 justify-content-center">
+          <!-- Define the specific order for the poses -->
+          {% set reordered_poses = [recommendation.recommended_poses[1], recommendation.recommended_poses[0], recommendation.recommended_poses[2]] %}
+          {% for pose in reordered_poses %}
+            <div class="col box mx-5 main d-flex justify-content-center {% if loop.index == 2 %}center-box{% else %}left-right-box{% endif %}">
+              {% if loop.index == 2 %}
+                <img src="https://cdn-icons-png.flaticon.com/512/3712/3712572.png" class="icon" alt="Icon">
+              {% endif %}
+              <div class="img mb-3 rounded-5">
+                <img src="{{ url_for('static', filename='img/yogas/' ~ pose ~ '.png') }}" alt="{{ pose }}" style="max-width: 100%; height: auto;">
+              </div>
+              <div class="my-4">{{pose}}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    <div>
+      <a class="btn btn-primary btn-xl rounded-pill my-3" href="/" style="background-color: #000; border-color: #000;">요가 하러가기</a>
     </div>
-    <div class="container d-flex justify-content-center mt-5">
-      <button type="submit" class="btn btn-dark btn-xl mt-3 mb-5 rounded-pill gothic-a1-regular fw-bold">추천 요가 하러가기</button>
-    </div>
+
   </div>
 </div>
+
 
 
 {% endblock %} {% block footer %}
