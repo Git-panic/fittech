@@ -66,5 +66,4 @@ def survey_answer():
                 flash("설문을 제출하는 중 문제가 발생했습니다. 나중에 다시 시도해주세요.", "error")
                 return redirect(url_for('sur.survey_answer'))  # 문제 발생 시 다시 설문 페이지로 이동
 
-
     return render_template('mypage.html')

@@ -3,7 +3,18 @@
 import pandas as pd
 import numpy as np
 import json
+from db_config import supabase
 from sklearn.metrics.pairwise import cosine_similarity
+
+data = supabase.from_("answers").select("*").execute()
+
+survey_data = data.json()
+survey_data = json.loads(survey_data)
+
+print(survey_data['data'])
+
+with open('survey_data.json', 'w') as json_file:
+    json.dump(survey_data['data'], json_file, indent=4)
 
 # 엑셀 파일에서 요가 데이터베이스 불러오기
 yoga_df = pd.read_excel("yoga_data.xlsx", engine='openpyxl')

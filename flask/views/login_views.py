@@ -11,14 +11,16 @@ def login():
         user_password = request.form['user_password']
 
         # Supabase에서 사용자 정보 가져오기
-        response = supabase.from_("users").select("user_id, user_password").eq("user_id", user_id).execute()
+        response = supabase.from_("users").select("user_id, user_password, user_name").eq("user_id", user_id).execute()
         user_record = response.data
 
         if user_record:
             stored_password = user_record[0]['user_password']
+            user_name = user_record[0]['user_name']
             if user_password == stored_password:
                 # 비밀번호가 일치하는 경우
                 session['user_id'] = user_id
+                session['user_name'] = user_name
                 return redirect(url_for('home'))
 
         # 비밀번호가 일치하지 않는 경우
@@ -46,6 +48,7 @@ def register():
         supabase.from_("users").insert({"user_name": user_name, "user_id": user_id, "user_password": user_password}).execute()
 
         session['user_id'] = user_id
+        session['user_name'] = user_name
         return redirect(url_for('home'))
 
     return render_template('register.html')
