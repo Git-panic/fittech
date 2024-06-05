@@ -128,9 +128,9 @@ for user_data in user_profiles:
         'recommended_poses': [pose for pose, similarity in recommended_poses]
     })
 
-# 추천된 요가 동작 출력
-for recommendation in all_recommendations:
-    print(f"사용자 ID: {recommendation['user_id']}")
-    print("추천된 요가 동작:")
-    print(recommendation['recommended_poses'])
-    print()  # 사용자 간 구분을 위한 공백
+# # 추천된 요가 동작 출력
+# for recommendation in all_recommendations:
+#     print(f"사용자 ID: {recommendation['user_id']}")
+#     print("추천된 요가 동작:")
+#     print(recommendation['recommended_poses'])
+#     print()  # 사용자 간 구분을 위한 공백

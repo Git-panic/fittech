@@ -79,9 +79,9 @@
 
 <div class="d-flex text-center">
   <div class="container">
+    <h3>{{ session['user_name'] }}님에게 가장 어울리는 동작이에요.</h3>
     {% for recommendation in recommendations %}
-      {% if recommendation.user_id == 16 %}
-        <h3>{{ recommendation.user_id }}님에게 가장 어울리는 동작이에요.</h3>
+      {% if recommendation.answerby == session['id'] %}
         <div class="row my-5 justify-content-center">
           <!-- Define the specific order for the poses -->
           {% set reordered_poses = [recommendation.recommended_poses[1], recommendation.recommended_poses[0], recommendation.recommended_poses[2]] %}

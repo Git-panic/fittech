@@ -120,6 +120,7 @@ def recommend_yoga_poses():
         recommended_poses = [pose for pose, similarity in sorted_poses[:N]]
 
         recommendations.append({
+            'answerby': user_data['answerby'],
             'user_id': user_data['id'],
             'recommended_poses': recommended_poses
         })
