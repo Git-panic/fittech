@@ -56,48 +56,6 @@
         "created_at": "2024-06-05T10:45:29.484395+00:00"
     },
     {
-        "id": 184,
-        "answerby": 5,
-        "gender": "female",
-        "age": 12,
-        "height": 12,
-        "weight": 12,
-        "period": "1",
-        "body_parts": "[\"stomach\"]",
-        "experience": "[\"online\"]",
-        "week": "1",
-        "purpose": "[\"relax\"]",
-        "created_at": "2024-06-05T10:57:20.193479+00:00"
-    },
-    {
-        "id": 181,
-        "answerby": 5,
-        "gender": "female",
-        "age": 44,
-        "height": 144,
-        "weight": 44,
-        "period": "0",
-        "body_parts": "[\"core\", \"waist\"]",
-        "experience": "[\"never\"]",
-        "week": "2",
-        "purpose": "[\"flex\"]",
-        "created_at": "2024-06-05T10:44:43.438431+00:00"
-    },
-    {
-        "id": 94,
-        "answerby": 5,
-        "gender": "male",
-        "age": 30,
-        "height": 155,
-        "weight": 50,
-        "period": "0",
-        "body_parts": "[\"all\"]",
-        "experience": "[\"never\"]",
-        "week": "0",
-        "purpose": "[\"strength\"]",
-        "created_at": "2024-06-05T07:20:18.458002+00:00"
-    },
-    {
         "id": 87,
         "answerby": 1,
         "gender": "female",
@@ -110,33 +68,5 @@
         "week": "0",
         "purpose": "[\"strength\"]",
         "created_at": "2024-06-04T18:31:45.110704+00:00"
-    },
-    {
-        "id": 183,
-        "answerby": 5,
-        "gender": "female",
-        "age": 44,
-        "height": 144,
-        "weight": 44,
-        "period": "0",
-        "body_parts": "[\"core\", \"waist\"]",
-        "experience": "[\"never\"]",
-        "week": "2",
-        "purpose": "[\"flex\"]",
-        "created_at": "2024-06-05T10:50:32.984822+00:00"
-    },
-    {
-        "id": 144,
-        "answerby": 6,
-        "gender": "female",
-        "age": 23,
-        "height": 166,
-        "weight": 66,
-        "period": "0",
-        "body_parts": "[\"all\"]",
-        "experience": "[\"never\"]",
-        "week": "2",
-        "purpose": "[\"relax\"]",
-        "created_at": "2024-06-05T09:01:18.938167+00:00"
     }
 ]
