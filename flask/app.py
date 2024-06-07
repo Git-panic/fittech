@@ -49,7 +49,7 @@ def home():
 @app.route('/recommend')
 def recommend():
     recommendations = recommend_yoga_poses()
-    return render_template('showRecommend.html', recommendations=recommendations)
+    return render_template('showRecommend.html', recommendations=recommendations, session_id=session['id'])
 
 
 # 연락처 페이지

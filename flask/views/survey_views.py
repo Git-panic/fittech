@@ -40,19 +40,34 @@ def survey_answer():
             purpose = json.dumps(data.get('purpose'))
         
             try:
+                aresponse = supabase.from_("answers").se('*').eq('answerby',uid)
+                if aresponse is None:
                 # Supabase에 데이터 저장
-                response = supabase.from_("answers").insert({
-                    "answerby" : answerby,
-                    "gender": gender,
-                    "age" : age,
-                    "height" : height,
-                    "weight" : weight,
-                    "period" : period,
-                    "body_parts" : body_parts,
-                    "experience" : experience,
-                    "week" : week,
-                    "purpose" : purpose,
-                }).execute()
+                    response = supabase.from_("answers").insert({
+                        "answerby" : answerby,
+                        "gender": gender,
+                        "age" : age,
+                        "height" : height,
+                        "weight" : weight,
+                        "period" : period,
+                        "body_parts" : body_parts,
+                        "experience" : experience,
+                        "week" : week,
+                        "purpose" : purpose,
+                    }).execute()
+                else:
+                    response = supabase.from_("answers").update({
+                        "answerby" : answerby,
+                        "gender": gender,
+                        "age" : age,
+                        "height" : height,
+                        "weight" : weight,
+                        "period" : period,
+                        "body_parts" : body_parts,
+                        "experience" : experience,
+                        "week" : week,
+                        "purpose" : purpose,}).match({'answerby': uid}).execute()
+                
                 
                 # 데이터가 성공적으로 저장되었는지 확인
                 if response.get("error") is None:
